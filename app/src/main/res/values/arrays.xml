@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="panchayathArray" >
+        <item>Select Panchayath</item>
+        <item>Aikkaranadu</item>
+        <item>Alengadu</item>
+        <item>Amballur</item>
+        <item>Arakuzha</item>
+        <item>Asamannur</item>
+        <item>Avoli</item>
+        <item>Ayavana</item>
+        <item>Ayyampuzha</item>
+        <item>Chellanam</item>
+        <item>Chendamangalam</item>
+        <item>Chengamanad</item>
+        <item>Cheranallur</item>
+
+    </string-array>
+    <string-array name="type">
+        <item>Select type</item>
+        <item>Pension</item>
+        <item>Schemes</item>
+    </string-array>
+
+    <string-array name="district">
+        <item>Select District</item>
+        <item>Eranakulam</item>
+        <item>Idukki</item>
+        <item>Thrisur</item>
+        <item>Vayanad</item>
+        <item>Kozhikode</item>
+        <item>Malapuram</item>
+        <item>Thrivanduram</item>
+        <item>Kasarcode</item>
+        <item>Kannur</item>
+    </string-array>
+</resources>

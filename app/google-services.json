@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "663332026818",
+    "project_id": "mdas-da466",
+    "storage_bucket": "mdas-da466.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663332026818:android:44467866555dce645ebe5b",
+        "android_client_info": {
+          "package_name": "com.mainproject.mdas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663332026818-irjep2ljojfsp2bkfk0efr2o62iloo04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIBHm5bx2TTZ9ySi5lD8s6ZmCvJKzfLIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663332026818-irjep2ljojfsp2bkfk0efr2o62iloo04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

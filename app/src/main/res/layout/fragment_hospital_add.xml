@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.admin.hospital.HospitalAddFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:fontFamily="@font/bungee"
+            android:gravity="center"
+            android:text="@string/hospital"
+            android:textColor="@color/mainColor"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgHospital"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:src="#000000"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:translationZ="4dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_outline_camera_alt_24"
+            android:background="@drawable/imgbck"
+            app:layout_constraintBottom_toBottomOf="@+id/imgHospital"
+            app:layout_constraintEnd_toEndOf="@+id/imgHospital"
+            app:layout_constraintTop_toTopOf="@+id/imgHospital"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+
+        <EditText
+            android:id="@+id/etHospitalName"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:inputType="textPersonName"
+            android:hint="@string/hospital_name"
+            android:textColor="@color/textColor"
+            android:layout_height="40dp"
+            android:drawableStart="@drawable/ic_baseline_card_membership_24"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_40ssp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:background="@drawable/edit_background"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/imgHospital"
+            tools:ignore="LabelFor,RtlSymmetry"
+            android:importantForAutofill="no" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_background"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/etHospitalName"
+            >
+
+            <Spinner
+                android:id="@+id/districtName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dropdown"
+                android:entries="@array/district"
+                android:backgroundTint="@color/mainColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <EditText
+            android:id="@+id/location"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_background"
+            android:drawableStart="@drawable/ic_baseline_card_membership_24"
+            android:drawablePadding="@dimen/_8sdp"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:paddingStart="@dimen/_10sdp"
+            android:hint="@string/place"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            tools:ignore="LabelFor,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/desc"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:maxLines="3"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="start"
+            android:background="@drawable/edit_background"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:paddingStart="@dimen/_14ssp"
+            android:hint="@string/write_hospital_description"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/location"
+            tools:ignore="LabelFor,RtlSymmetry" />
+
+
+        <RatingBar
+            style="@style/CustomRatingBar"
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="@+id/desc"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/desc"
+            app:layout_constraintTop_toBottomOf="@id/desc" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/button"
+            android:text="@string/submit"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="30dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="30dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

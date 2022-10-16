@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav"
+    app:startDestination="@id/homeFragment">
+
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mainproject.mdas.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_schemeFragment"
+            app:destination="@id/schemeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.mainproject.mdas.view.admin.trainee.TrainingFragment"
+        android:label="fragment_training"
+        tools:layout="@layout/fragment_training" />
+    <fragment
+        android:id="@+id/schemeFragment"
+        android:name="com.mainproject.mdas.view.admin.scheme.SchemeFragment"
+        android:label="fragment_scheme"
+        tools:layout="@layout/fragment_scheme" />
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.mainproject.mdas.view.admin.person.PersonFragment"
+        android:label="fragment_person"
+        tools:layout="@layout/fragment_person" />
+    <fragment
+        android:id="@+id/hospitalFragment"
+        android:name="com.mainproject.mdas.view.admin.hospital.HospitalControlFragment"
+        android:label="fragment_hospital_contril"
+        tools:layout="@layout/fragment_hospital_contril" />
+</navigation>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.admin.ProfileFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/domo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Antony Giroud"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato"
+        android:text="9497039910"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintEnd_toEndOf="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/lato"
+        android:text="antonygiroud@gmail.com"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintEnd_toEndOf="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_54sdp"
+        android:background="#F1F8FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email">
+
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disability"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/stoke_person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <EditText
+                android:id="@+id/edtDisability"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:selectAllOnFocus="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/percentage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardian"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+
+        <EditText
+            android:id="@+id/guardian"
+            style="@style/editLabel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:drawablePadding="@dimen/_8sdp"
+            android:background="@drawable/stoke_person"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guardian" />
+
+
+        <EditText
+            android:id="@+id/edtPhone"
+            style="@style/editLabel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:drawablePadding="@dimen/_8sdp"
+            android:background="@drawable/stoke_person"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+
+        <TextView
+            android:id="@+id/textView6"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
+
+
+        <EditText
+            android:id="@+id/edtEmail"
+            style="@style/editLabel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:drawablePadding="@dimen/_8sdp"
+            android:background="@drawable/stoke_person"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/btn_style"
+            android:background="@drawable/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="@string/submit"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

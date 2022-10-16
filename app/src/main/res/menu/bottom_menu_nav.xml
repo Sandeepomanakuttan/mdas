@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/homeFragment"
+        android:title="Home"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item android:id="@+id/schemeFragment"
+        android:title="Scheme"
+        app:showAsAction="always"
+        android:orderInCategory="2"
+        android:icon="@drawable/icon_scheme"/>
+
+
+    <item android:id="@+id/trainingFragment"
+        android:title="Trainee"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:icon="@drawable/icon_trainee"/>
+
+    <item android:id="@+id/hospitalFragment"
+        android:title="Hospital"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_baseline_local_hospital_24"/>
+
+
+    <item android:id="@+id/personFragment"
+        android:title="Users"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_baseline_person_24"/>
+</menu>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MDAS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="what_you_want">What you want</string>
+    <string name="_91">+91</string>
+    <string name="resend_otp_26">Resend OTP (%s)</string>
+    <string name="submit">Submit</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="resend">Resend</string>
+    <string name="add_trainee">Add Trainee</string>
+    <string name="add_schemes">Add Schemes</string>
+    <string name="scheme_name">Scheme Name</string>
+    <string name="pondichery">Pondichery</string>
+    <string name="_4_5_120_reviews">%s | %s Reviews</string>
+    <string name="trainee_exp">%s, %s years experience</string>
+    <string name="hospital">Hospital</string>
+    <string name="write_hospital_description">write Hospital Description...</string>
+    <string name="place">Place...</string>
+    <string name="hospital_name">hospital Name</string>
+
+</resources>

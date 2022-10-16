@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.auth.LoginFragment">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/imageFilterView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/kindpng"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        style="@style/editText"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="@dimen/_22sdp"
+        android:background="@drawable/edit_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_91"
+            android:textColor="#a8a8a8"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif"
+            android:hint="@string/enter_your_mobile_number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:textColor="#a8a8a8"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:autofillHints="phone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="yes" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/phoneError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/resend"
+        android:visibility="gone"
+        android:textColor="#ff556a"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout5" />
+
+    <LinearLayout
+        android:id="@+id/otpLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_70sdp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
+
+        <EditText
+            android:id="@+id/code1"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/code2"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/code3"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/code4"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/code5"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/code6"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:autofillHints="smsOTPCode"
+            android:background="@drawable/edit_style"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:gravity="center"
+            android:importantForAutofill="yes"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/textColor"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="sans-serif"
+        android:text="@string/resend_otp_26"
+        android:textColor="#ff566a"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/otpLayout"
+        app:layout_constraintStart_toStartOf="@+id/otpLayout"
+        app:layout_constraintTop_toBottomOf="@+id/otpLayout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_150sdp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/bungee"
+        android:scaleType="fitXY"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_175sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginBottom="88dp"
+        android:src="@drawable/d"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageFilterView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageFilterView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
