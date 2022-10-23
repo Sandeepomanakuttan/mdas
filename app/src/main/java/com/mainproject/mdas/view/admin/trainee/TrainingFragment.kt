@@ -18,6 +18,7 @@ class TrainingFragment :BaseFragments<FragmentTrainingBinding>(FragmentTrainingB
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"trainee")
+        adapter.item = traineeArray
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->

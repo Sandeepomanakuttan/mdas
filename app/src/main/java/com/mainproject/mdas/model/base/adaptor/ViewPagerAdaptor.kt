@@ -1,9 +1,13 @@
 package com.mainproject.mdas.model.base.adaptor
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.mainproject.mdas.view.admin.comman.ApproveSchemeFragment
+import com.mainproject.mdas.view.admin.comman.PendingSchemeFragment
+import com.mainproject.mdas.view.admin.comman.RejectSchemeFragment
 import com.mainproject.mdas.view.admin.hospital.HospitalAddFragment
 import com.mainproject.mdas.view.admin.hospital.HospitalViewFragment
 import com.mainproject.mdas.view.admin.person.PersonAddFragment
@@ -14,7 +18,7 @@ import com.mainproject.mdas.view.admin.scheme.SchemeViewFragment
 import com.mainproject.mdas.view.admin.trainee.TraineeAddFragment
 import com.mainproject.mdas.view.admin.trainee.TraineeViewFragment
 
-private const val NUM_TABS = 2
+
 
 public class ViewPagerAdapter(
     fragmentManager: FragmentManager,
@@ -23,8 +27,15 @@ public class ViewPagerAdapter(
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
+    var item = emptyArray<String>()
+    @SuppressLint("NotifyDataSetChanged")
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
-        return NUM_TABS
+        return item.size
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -57,6 +68,13 @@ public class ViewPagerAdapter(
                     0 -> HospitalViewFragment()
                     else -> HospitalAddFragment()
 
+                }
+            }
+            "commonScheme" ->{
+                frag = when(position) {
+                    0 -> ApproveSchemeFragment()
+                    1 -> PendingSchemeFragment()
+                    else -> RejectSchemeFragment()
                 }
             }
 

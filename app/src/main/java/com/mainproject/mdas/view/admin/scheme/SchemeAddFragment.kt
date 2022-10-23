@@ -5,24 +5,23 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentSchemeAddBinding
-import com.mainproject.mdas.databinding.FragmentSchemeBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.progress
-import com.mainproject.mdas.utils.disableArray
-import com.mainproject.mdas.utils.panchayatArray
+import com.mainproject.mdas.utils.disableArrays
+import com.mainproject.mdas.utils.monthName
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SchemeAddFragment : BaseFragments<FragmentSchemeAddBinding>(FragmentSchemeAddBinding::inflate),AdapterView.OnItemSelectedListener {
@@ -39,6 +38,8 @@ class SchemeAddFragment : BaseFragments<FragmentSchemeAddBinding>(FragmentScheme
                 progress.isVisible = false
                 if (it.status){
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.imgScheme.setImageURI(null)
+
                 }
             }
 
@@ -53,24 +54,28 @@ class SchemeAddFragment : BaseFragments<FragmentSchemeAddBinding>(FragmentScheme
             }else if (binding.type.selectedItem.toString() == "Select type"){
                 Toast.makeText(requireContext(), "please select Scheme type", Toast.LENGTH_SHORT).show()
             }
-            else if (binding.categoryName.selectedItem.toString() == disableArray[0]){
+            else if (binding.categoryName.selectedItem.toString() == disableArrays[0]){
                 Toast.makeText(requireContext(), "please select Disability type", Toast.LENGTH_SHORT).show()
-            }else if(binding.spinnerPachayath.selectedItem.toString() == panchayatArray[0]){
-                Toast.makeText(requireContext(), "please select trainer Available Panchayath", Toast.LENGTH_SHORT).show()
             }else if(binding.amount.text.isEmpty()) {
                 Toast.makeText(requireContext(), "Please Allocated amount", Toast.LENGTH_SHORT).show()
+            }else if(binding.desc.text.isEmpty()) {
+                Toast.makeText(requireContext(), "Please Add Description", Toast.LENGTH_SHORT).show()
             } else{
-                val scheme = ResponseClass.SchemeClass(schemeName = binding.etSchemeName.text.toString(), disability = binding.categoryName.selectedItem.toString(), panchayath = binding.spinnerPachayath.selectedItem.toString(), amount = binding.amount.text.toString(), schemeImg = imageUri.toString(),type=binding.type.selectedItem.toString())
+                val dateFormat: DateFormat = SimpleDateFormat("MM")
+                val date = Date()
+                Log.d("Month", dateFormat.format(date))
+                val scheme = ResponseClass.SchemeClass(schemeName = binding.etSchemeName.text.toString(), disability = binding.categoryName.selectedItem.toString(), panchayath = binding.spinnerPachayath.text.toString(), amount = binding.amount.text.toString(), schemeImg = imageUri.toString(),type=binding.type.selectedItem.toString(), description = binding.desc.text.toString(), month =dateFormat.format(date).toString() )
                 viewModel.addScheme(scheme)
                 progress.isVisible = true
             }
 
         }
 
+
         val spinner = ArrayAdapter(
             requireContext(),
             com.bumptech.glide.R.layout.support_simple_spinner_dropdown_item,
-            disableArray
+            disableArrays
         )
 
         spinner.setDropDownViewResource(
@@ -85,7 +90,6 @@ class SchemeAddFragment : BaseFragments<FragmentSchemeAddBinding>(FragmentScheme
         }
 
         binding.categoryName.onItemSelectedListener = this
-        binding.spinnerPachayath.onItemSelectedListener = this
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

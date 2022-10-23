@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentHospitalAddBinding
 import com.mainproject.mdas.model.base.BaseFragments
@@ -38,21 +39,6 @@ class HospitalAddFragment :
 
         observers()
 
-        hospitalAddResponse.observe(viewLifecycleOwner){
-            progress.isVisible = false
-            if (it.status){
-                if (it.message!="Hospital Already Exist"){
-                    binding.imgHospital.setBackgroundColor(resources.getColor(R.color.black))
-                    binding.location.text.clear()
-                    binding.desc.text.clear()
-                    binding.ratingBar.rating=0f
-                }else{
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-            }else{
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
-        }
 
         binding.imgHospital.borderColor=resources.getColor(R.color.mainColor)
         binding.imgHospital.setOnClickListener {
@@ -62,7 +48,7 @@ class HospitalAddFragment :
             hospitalName = binding.etHospitalName.text.toString().trim()
             district = binding.districtName.selectedItem.toString()
             place = binding.location.text.toString().trim()
-            desc = binding.desc.text.toString().trim()
+            desc = binding.address.text.toString().trim()
             rating = binding.ratingBar.rating
             if (imageUri == null) {
                 Toast.makeText(requireContext(), "Please Add Hospital Image", Toast.LENGTH_SHORT)
@@ -96,6 +82,23 @@ class HospitalAddFragment :
 
     private fun observers() {
 
+        hospitalAddResponse.observe(viewLifecycleOwner){
+            progress.isVisible = false
+            if (it.status){
+                if (it.message!="Hospital Already Exist"){
+                    Glide.with(requireContext()).load("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngitem.com%2Fmiddle%2FTRxRJxb_empty-profile-picture-icon-hd-png-download%2F&psig=AOvVaw27rmIjpNTrNL60FO6neh2u&ust=1666142630330000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCLCOuo_P6PoCFQAAAAAdAAAAABAJ").into(binding.imgHospital)
+                    binding.location.text.clear()
+                    binding.address.text.clear()
+                    binding.ratingBar.rating=0f
+                    binding.etHospitalName.text.clear()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
 
 
     }

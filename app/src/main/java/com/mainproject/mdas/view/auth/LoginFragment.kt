@@ -20,6 +20,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.mainproject.mdas.R
+import com.mainproject.mdas.RegistrationFragment
 import com.mainproject.mdas.databinding.FragmentLoginBinding
 import com.mainproject.mdas.model.repository.auth.AuthRepository
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
@@ -72,19 +73,23 @@ class LoginFragment : Fragment() {
                 }
             }
             else {
-                val user =User(phoneNumber = binding.phoneNumber.text.toString(), type = "Admin")
-
-                user.phoneNumber?.let { it1 ->
-                    FirebaseDatabase.getInstance().getReference("User").child(it1).setValue(user).addOnCompleteListener{
-                        if (it.isSuccessful){
-                            Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(requireContext(), it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+//                val user =User(phoneNumber = binding.phoneNumber.text.toString(), type = "Admin")
+//
+//                user.phoneNumber?.let { it1 ->
+//                    FirebaseDatabase.getInstance().getReference("User").child(it1).setValue(user).addOnCompleteListener{
+//                        if (it.isSuccessful){
+//                            Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
+//                        }else{
+//                            Toast.makeText(requireContext(), it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
             }
 
+        }
+
+        binding.reg.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -103,20 +108,19 @@ class LoginFragment : Fragment() {
 
                     viewModel.s=requireActivity()
 
-                   // viewModel.sendVerificationCode(binding.phoneNumber.text.toString())
+                    viewModel.sendVerificationCode(binding.phoneNumber.text.toString())
 
-                viewModel.checkUser(binding.phoneNumber.text.trim().toString(),"")
-//                    viewModel.otps?.observe(viewLifecycleOwner) {
-//                        binding.progress.isVisible = false
-//                        binding.otpLayout.isVisible = true
-//                        countDownTimer = MyCountDownTimer(startTime, interval)
-//                        binding.btnSubmit.text="LOGIN"
-//                        binding.resend.isVisible = true
-//                        verificationId = it.toString()
+                    viewModel.otps?.observe(viewLifecycleOwner) {
+                        binding.progress.isVisible = false
+                        binding.otpLayout.isVisible = true
+                        countDownTimer =MyCountDownTimer(startTime, interval)
+                        binding.btnSubmit.text="LOGIN"
+                        binding.resend.isVisible = true
+                        verificationId = it.toString()
                         setupOtpInput()
                         timerControl()
 
-                   // }
+                   }
                 }
             }else{
                 otpVerification()

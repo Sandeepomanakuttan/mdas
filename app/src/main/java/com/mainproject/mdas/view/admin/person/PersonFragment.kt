@@ -13,13 +13,14 @@ import com.mainproject.mdas.model.base.adaptor.ViewPagerAdapter
 
 class PersonFragment : BaseFragments<FragmentPersonBinding>(FragmentPersonBinding::inflate) {
 
-    private val personArray = arrayOf("View Person","Add Person")
+    private val personArray = arrayOf("Request Person","Persons")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"person")
+        adapter.item = personArray
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->

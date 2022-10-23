@@ -52,7 +52,7 @@
 
     <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar</item>
-        <item name="android:minHeight">@dimen/_10sdp</item>
-        <item name="android:minWidth">@dimen/_10sdp</item>
+        <item name="android:minHeight">@dimen/_8sdp</item>
+        <item name="android:minWidth">@dimen/_8sdp</item>
     </style>
 </resources>

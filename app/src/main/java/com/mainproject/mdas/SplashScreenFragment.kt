@@ -29,17 +29,16 @@ class SplashScreenFragment :
                 animationView.visibility = View.INVISIBLE
 
                 animationView.startAnimations(animation) {
-                    root.setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.purple_500
-                        )
-                    )
+//                    root.setBackgroundColor(
+//                        ContextCompat.getColor(
+//                            requireContext(),
+//                            R.color.purple_200
+//                        )
+//                    )
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_adminBaseFragment)
+
                     animationView.visibility = View.INVISIBLE
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().navigate(R.id.action_splashScreenFragment_to_onbordingFragment)
-                    }, 1100)
                 }
             }
         }, 700)

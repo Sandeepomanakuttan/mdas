@@ -10,7 +10,8 @@ import com.mainproject.mdas.databinding.FragmentProfileBinding
 import com.mainproject.mdas.model.base.BaseFragments
 
 
-class ProfileFragment : BaseFragments<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
+class ProfileFragment : BaseFragments<FragmentProfileBinding>(
+    FragmentProfileBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

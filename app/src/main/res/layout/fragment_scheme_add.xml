@@ -119,50 +119,56 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/spinnerPachayathLayout"
-        android:layout_width="0dp"
-        android:background="@drawable/edit_background"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_height="@dimen/_40sdp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
-        >
-        <Spinner
+
+        <TextView
             android:id="@+id/spinnerPachayath"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:spinnerMode="dropdown"
-            android:backgroundTint="@color/mainColor"
-            android:entries="@array/panchayathArray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="0dp"
+            style="@style/editText"
+            android:layout_height="@dimen/_42sdp"
+            android:background="@drawable/edit_background"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/paingottoor"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/spinner"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
             tools:ignore="RtlSymmetry" />
 
+        <EditText
+            android:id="@+id/amount"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_background"
+            android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
+            android:drawablePadding="@dimen/_8sdp"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:paddingStart="@dimen/_10sdp"
+            android:hint="@string/amount"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerPachayath"
+            tools:ignore="LabelFor,RtlSymmetry" />
 
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/amount"
-        style="@style/editText"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="@drawable/edit_background"
-        android:drawableStart="@drawable/ic_baseline_card_membership_24"
-        android:drawablePadding="@dimen/_8sdp"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:paddingStart="@dimen/_10sdp"
-        android:text="Amount"
-        android:textColor="@color/textColor"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerPachayathLayout"
-        tools:ignore="LabelFor,RtlSymmetry" />
+        <EditText
+            android:id="@+id/desc"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:maxLines="4"
+            android:gravity="start"
+            android:background="@drawable/edit_background"
+            android:hint="@string/amount"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="@dimen/_10sdp"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            tools:ignore="LabelFor,RtlSymmetry" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -175,7 +181,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/amount" />
+        app:layout_constraintTop_toBottomOf="@+id/desc" />
 
 
 

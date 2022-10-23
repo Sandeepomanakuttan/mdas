@@ -60,17 +60,29 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/location"
+                    app:layout_constraintStart_toStartOf="@+id/desc"
+                    app:layout_constraintTop_toTopOf="@+id/location"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/lato"
                     android:gravity="center"
                     android:text="@string/pondichery"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:textColor="@color/mainColor"
                     android:textSize="@dimen/_14ssp"
                     app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.974"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,43 +90,33 @@
                     android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/lato"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:maxLines="2"
+                    android:layout_marginEnd="@dimen/_12sdp"
                     android:text="Jipmer Campus Rd, Jipmer Campus, \nPuducherry, 605006"
                     android:textColor="#646464"
                     android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.135"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/location"
                     tools:ignore="HardcodedText" />
 
-
                 <RatingBar
                     android:id="@+id/ratingBar"
                     style="@style/CustomRatingBar"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:isIndicator="true"
                     android:numStars="5"
-                    android:stepSize="0.01"
-                    app:layout_constraintEnd_toStartOf="@+id/vote"
+                    android:isIndicator="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.185"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/desc" />
-
-                <TextView
-                    android:id="@+id/vote"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="@string/_4_5_120_reviews"
-                    app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/desc"
+                    app:layout_constraintVertical_bias="0.384" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -124,10 +126,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/jimper"
+            android:src="@drawable/vct"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="Hospital"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            />
+
 
 
     </androidx.cardview.widget.CardView>

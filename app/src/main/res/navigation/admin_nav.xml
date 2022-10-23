@@ -29,10 +29,35 @@
         android:id="@+id/personFragment"
         android:name="com.mainproject.mdas.view.admin.person.PersonFragment"
         android:label="fragment_person"
-        tools:layout="@layout/fragment_person" />
+        tools:layout="@layout/fragment_person" >
+        <action
+            android:id="@+id/action_personFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_personFragment_to_commonSchemesFragment"
+            app:destination="@id/commonSchemesFragment" />
+        <action
+            android:id="@+id/action_personFragment_to_viewPersonDetailsFragment"
+            app:destination="@id/viewPersonDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/hospitalFragment"
         android:name="com.mainproject.mdas.view.admin.hospital.HospitalControlFragment"
         android:label="fragment_hospital_contril"
         tools:layout="@layout/fragment_hospital_contril" />
+    <fragment
+        android:id="@+id/commonSchemesFragment"
+        android:name="com.mainproject.mdas.view.admin.comman.CommonSchemesFragment"
+        android:label="fragment_common_schemes"
+        tools:layout="@layout/fragment_common_schemes" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.mainproject.mdas.view.admin.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/viewPersonDetailsFragment"
+        android:name="com.mainproject.mdas.view.admin.person.viewPersonDetailsFragment"
+        android:label="fragment_view_person_details"
+        tools:layout="@layout/fragment_view_person_details" />
 </navigation>

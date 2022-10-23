@@ -1,60 +1,84 @@
 package com.mainproject.mdas.view.admin.person
 
+import android.app.Activity
+import android.app.Person
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mainproject.mdas.R
+import com.mainproject.mdas.databinding.FragmentPersonAddBinding
+import com.mainproject.mdas.model.base.BaseFragments
+import com.mainproject.mdas.model.response.ResponseClass
+import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
+import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel.Companion.personAddResponse
+import com.mainproject.mdas.progress
+import com.mainproject.mdas.utils.RecyclerViewAdaptor
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PersonAddFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class PersonAddFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class PersonAddFragment : BaseFragments<FragmentPersonAddBinding>(FragmentPersonAddBinding::inflate) {
+    lateinit var viewModel: AdminViewModel
+    lateinit var recycleViewAdaptor: RecyclerViewAdaptor
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+
+        recycleViewAdaptor= RecyclerViewAdaptor(requireContext())
+
+       viewModel.getPerson()
+        progress.isVisible = true
+
+        viewModel.personResponse.observe(viewLifecycleOwner){
+            if (it.status){
+                progress.isVisible = false
+                binding.recyclerView.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    recycleViewAdaptor.item = it.person
+                    adapter = recycleViewAdaptor
+                    setHasFixedSize(true)
+                }
+
+                itemClickListener(recycleViewAdaptor)
+            }else{
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_person_add, container, false)
-    }
+    private fun itemClickListener(recycleViewAdaptor: RecyclerViewAdaptor) {
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PersonAddFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PersonAddFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val bundle = bundleOf()
+        recycleViewAdaptor.itemClickListener={view, item, position ->
+            when (item){
+                is ResponseClass.Person->{
+                    bundle.putString("id",item.id)
+                    bundle.putString("child",item.phone)
+                    bundle.putBoolean("page",true)
+                    when(view.id) {
+                        R.id.schemes -> {
+                            findNavController().navigate(R.id.action_personFragment_to_commonSchemesFragment,bundle)
+                        }
+                        R.id.view ->{
+                            findNavController().navigate(R.id.action_personFragment_to_viewPersonDetailsFragment,bundle)
+                        }
+                    }
                 }
+                else -> {}
             }
+
+        }
+
     }
 }

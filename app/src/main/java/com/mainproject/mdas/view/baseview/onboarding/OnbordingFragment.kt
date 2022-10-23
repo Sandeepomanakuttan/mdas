@@ -1,16 +1,13 @@
 package com.mainproject.mdas.view.baseview.onboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentOnbordingBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.onboarding.adaptor.SlideCallBack
 import com.mainproject.mdas.model.onboarding.adaptor.SliderAdaptor
+
 
 class OnbordingFragment : BaseFragments<FragmentOnbordingBinding>(FragmentOnbordingBinding::inflate),SlideCallBack{
 
@@ -26,6 +23,14 @@ class OnbordingFragment : BaseFragments<FragmentOnbordingBinding>(FragmentOnbord
         if (i != 2)
         binding.viewPager.currentItem = binding.viewPager.currentItem+1
         else
-            findNavController().navigate(R.id.action_onbordingFragment_to_loginFragment)
+            findNavController().navigate(com.mainproject.mdas.R.id.action_onbordingFragment_to_loginFragment)
     }
+
+//    private fun RunAnimation() {
+//        val a: Animation = AnimationUtils.loadAnimation(requireContext(), com.mainproject.mdas.R.anim.animate_fade_enter)
+//        a.reset()
+//        val tv = findViewById(R.id.firstTextView) as TextView
+//        tv.clearAnimation()
+//        tv.startAnimation(a)
+//    }
 }

@@ -115,7 +115,7 @@
             tools:ignore="LabelFor,RtlSymmetry" />
 
         <EditText
-            android:id="@+id/desc"
+            android:id="@+id/address"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:maxLines="3"
@@ -125,7 +125,7 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingStart="@dimen/_14ssp"
-            android:hint="@string/write_hospital_description"
+            android:hint="@string/address"
             android:textColor="@color/textColor"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -141,10 +141,10 @@
             android:numStars="5"
             android:stepSize="0.1"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="@+id/desc"
+            app:layout_constraintEnd_toEndOf="@+id/address"
             app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="@+id/desc"
-            app:layout_constraintTop_toBottomOf="@id/desc" />
+            app:layout_constraintStart_toStartOf="@+id/address"
+            app:layout_constraintTop_toBottomOf="@id/address" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSubmit"

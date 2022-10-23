@@ -16,6 +16,7 @@ class HospitalControlFragment : BaseFragments<FragmentHospitalContrilBinding>(Fr
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"hospital")
+        adapter.item = traineeArray
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->

@@ -17,6 +17,9 @@
             app:exitAnim="@anim/animate_fade_exit"
             app:popEnterAnim="@anim/animate_fade_enter"
             app:popExitAnim="@anim/animate_fade_exit"/>
+        <action
+            android:id="@+id/action_splashScreenFragment_to_adminBaseFragment"
+            app:destination="@id/adminBaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/onbordingFragment"
@@ -49,7 +52,11 @@
         android:id="@+id/registrationFragment"
         android:name="com.mainproject.mdas.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/adminBaseFragment"

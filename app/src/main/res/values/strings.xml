@@ -18,5 +18,30 @@
     <string name="write_hospital_description">write Hospital Description...</string>
     <string name="place">Place...</string>
     <string name="hospital_name">hospital Name</string>
+    <string name="person_name">Person Name</string>
+    <string name="enter_house_name">Enter House Name</string>
+    <string name="enter_panchayth_name">Enter Panchayth Name</string>
+    <string name="name">Name : </string>
+    <string name="house_name">House Name</string>
+    <string name="address">Address...</string>
+    <string name="let_s_find_your_hospitals">Let’s find your hospitals</string>
+    <string name="let_s_find_your_users">Let’s find your Users</string>
+    <string name="schemes">Schemes</string>
+    <string name="show_all">Show All</string>
+    <string name="sandeep">sandeep</string>
+    <string name="paingottoor">Paingottoor</string>
+    <string name="amount">Amount</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="enter_guardian_name">Enter Guardian Name</string>
+    <string name="enter_uid_number">Enter UID Number</string>
+    <string name="how_much_percentage_you_have">How much percentage You have</string>
+    <string name="code_has_been_send_to_91_84_61">Code has been send to +91 %s</string>
+    <string name="disability_certificate">Disability Certificate</string>
+    <string name="uid_certificate">UID Certificate</string>
+    <string name="guardian_uid_certificate">Guardian UID Certificate</string>
+    <string name="disability">Disability :</string>
+    <string name="low_vission">Low Vission</string>
+    <string name="percentage">Percentage :</string>
+    <string name="_40">%s %</string>
 
 </resources>
