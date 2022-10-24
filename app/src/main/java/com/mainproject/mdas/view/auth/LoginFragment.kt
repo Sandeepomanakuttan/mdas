@@ -1,6 +1,8 @@
 package com.mainproject.mdas.view.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,12 +22,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.mainproject.mdas.HomeFragment
 import com.mainproject.mdas.R
 import com.mainproject.mdas.RegistrationFragment
 import com.mainproject.mdas.databinding.FragmentLoginBinding
 import com.mainproject.mdas.model.repository.auth.AuthRepository
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
 import com.mainproject.mdas.model.viewmodel.User
+import com.mainproject.mdas.utils.preference
 
 
 class LoginFragment : Fragment() {
@@ -54,36 +59,43 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel= ViewModelProvider(this)[AuthViewModel()::class.java]
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(HomeFragment().sharedPrefFile,
+            Context.MODE_PRIVATE)
 
 
         AuthViewModel.userList.observe(viewLifecycleOwner){
             binding.progress.isVisible=false
             if (it != null) {
                 if (it.status) {
+                    val bundle = bundleOf()
                     if(it.message=="Success") {
                         if (it.user?.type == "Admin") {
-                            Toast.makeText(requireContext(), "Admin", Toast.LENGTH_SHORT).show()
+                            bundle.putString("user","Admin")
+                            bundle.putString("phone",it.user?.phone)
                             findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
+                        }else{
+                            if (it.user?.status=="apply"){
+                                Toast.makeText(requireContext(), "Validation Progress..\nplease Wait...few Hours", Toast.LENGTH_SHORT).show()
+                            }else{
+                                bundle.putString("user","User")
+                                bundle.putString("phone",it.user?.phone)
+                                bundle.putString("disability",it.user?.disability)
+
+                                it.user?.phone?.let {phone ->
+                                    preference(requireContext(),phone, userType = it.user?.type!!)
+
+                                }
+
+
+                                    findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
+                            }
                         }
                     }else{
                         Toast.makeText(requireContext(), "User doesn't exits", Toast.LENGTH_SHORT).show()
                     }
                 }else{
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()
                 }
-            }
-            else {
-//                val user =User(phoneNumber = binding.phoneNumber.text.toString(), type = "Admin")
-//
-//                user.phoneNumber?.let { it1 ->
-//                    FirebaseDatabase.getInstance().getReference("User").child(it1).setValue(user).addOnCompleteListener{
-//                        if (it.isSuccessful){
-//                            Toast.makeText(requireContext(), "Added", Toast.LENGTH_SHORT).show()
-//                        }else{
-//                            Toast.makeText(requireContext(), it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                }
             }
 
         }

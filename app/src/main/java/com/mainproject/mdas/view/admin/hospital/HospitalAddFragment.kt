@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,7 @@ import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel.Companion.hospitalAddResponse
 import com.mainproject.mdas.progress
+import com.mainproject.mdas.utils.disableArrays
 
 
 class HospitalAddFragment :
@@ -32,12 +34,26 @@ class HospitalAddFragment :
     var place : String?=null
     var desc : String?=null
     var rating : Float?=null
+    var disability : String?=null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
 
         observers()
+
+        val spinner = ArrayAdapter(
+            requireContext(),
+            com.bumptech.glide.R.layout.support_simple_spinner_dropdown_item,
+            disableArrays
+        )
+
+        spinner.setDropDownViewResource(
+            android.R.layout
+                .simple_spinner_dropdown_item
+        )
+
+        binding.disability.adapter = spinner
 
 
         binding.imgHospital.borderColor=resources.getColor(R.color.mainColor)
@@ -50,6 +66,7 @@ class HospitalAddFragment :
             place = binding.location.text.toString().trim()
             desc = binding.address.text.toString().trim()
             rating = binding.ratingBar.rating
+            disability = binding.disability.selectedItem.toString()
             if (imageUri == null) {
                 Toast.makeText(requireContext(), "Please Add Hospital Image", Toast.LENGTH_SHORT)
                     .show()
@@ -58,6 +75,7 @@ class HospitalAddFragment :
                     validation(
                         hospitalName!!,
                         district!!,
+                        disability!!,
                         place!!,
                         desc!!,
                         rating!!
@@ -71,7 +89,8 @@ class HospitalAddFragment :
                             district,
                             place,
                             desc,
-                            rating.toString()
+                            rating.toString(),
+                            disability
                         )
                     )
                     progress.isVisible = true
@@ -106,6 +125,7 @@ class HospitalAddFragment :
     fun validation(
         hospitalName: String,
         district: String,
+        disability: String,
         place: String,
         desc: String,
         rating: Float
@@ -122,6 +142,11 @@ class HospitalAddFragment :
                     .show()
                 return false
             }
+             disability == disableArrays[0] -> {
+                 Toast.makeText(requireContext(), "Please Select Disability", Toast.LENGTH_SHORT)
+                     .show()
+                 return false
+             }
             TextUtils.isEmpty(place) -> {
                 Toast.makeText(requireContext(), "Please Enter Place Name", Toast.LENGTH_SHORT)
                     .show()

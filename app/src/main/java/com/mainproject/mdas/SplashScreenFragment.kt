@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mainproject.mdas.databinding.FragmentSplashScreenBinding
 import com.mainproject.mdas.model.base.BaseFragments
+import com.mainproject.mdas.utils.getPreference
+import com.mainproject.mdas.utils.preference
 import com.mainproject.mdas.utils.startAnimations
 
 class SplashScreenFragment :
@@ -35,8 +37,18 @@ class SplashScreenFragment :
 //                            R.color.purple_200
 //                        )
 //                    )
-                    findNavController().navigate(R.id.action_splashScreenFragment_to_adminBaseFragment)
 
+                    preference(requireContext(),"9497039910","User")
+
+                    val (user,type) = getPreference(requireContext())
+
+                    if (user == null) {
+                        findNavController().navigate(R.id.action_splashScreenFragment_to_onbordingFragment)
+                    }
+                    else {
+                        findNavController().navigate(R.id.action_splashScreenFragment_to_adminBaseFragment)
+
+                    }
                     animationView.visibility = View.INVISIBLE
 
                 }

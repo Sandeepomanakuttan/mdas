@@ -13,8 +13,10 @@ import com.mainproject.mdas.view.admin.hospital.HospitalViewFragment
 import com.mainproject.mdas.view.admin.person.PersonAddFragment
 import com.mainproject.mdas.view.admin.person.PersonFragment
 import com.mainproject.mdas.view.admin.person.PersonViewFragment
+import com.mainproject.mdas.view.admin.person.viewPersonDetailsFragment
 import com.mainproject.mdas.view.admin.scheme.SchemeAddFragment
 import com.mainproject.mdas.view.admin.scheme.SchemeViewFragment
+import com.mainproject.mdas.view.admin.trainee.AvailableTraineeFragment
 import com.mainproject.mdas.view.admin.trainee.TraineeAddFragment
 import com.mainproject.mdas.view.admin.trainee.TraineeViewFragment
 
@@ -55,6 +57,8 @@ public class ViewPagerAdapter(
 
                 }
             }
+            "UserHospital" -> frag =HospitalViewFragment()
+            "my" -> frag = viewPersonDetailsFragment()
             "person" -> {
                 frag = when (position) {
                     0 -> PersonViewFragment()
@@ -75,6 +79,13 @@ public class ViewPagerAdapter(
                     0 -> ApproveSchemeFragment()
                     1 -> PendingSchemeFragment()
                     else -> RejectSchemeFragment()
+                }
+            }
+            "user Trainee" ->{
+                frag = when (position){
+                    0 -> TraineeViewFragment()
+
+                    else -> AvailableTraineeFragment()
                 }
             }
 

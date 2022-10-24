@@ -9,22 +9,36 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.mainproject.mdas.databinding.FragmentPersonBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.base.adaptor.ViewPagerAdapter
+import com.mainproject.mdas.utils.getPreference
 
 
 class PersonFragment : BaseFragments<FragmentPersonBinding>(FragmentPersonBinding::inflate) {
 
-    private val personArray = arrayOf("Request Person","Persons")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+        val (userName, type) = getPreference(requireContext())
 
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"person")
-        adapter.item = personArray
-        binding.viewPager.adapter = adapter
+        if (type == "Admin") {
+            val personArray = arrayOf("Request Person", "Persons")
+            val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, "person")
+            adapter.item = personArray
+            binding.viewPager.adapter = adapter
 
-        TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->
-            tab.text = personArray[position]
-        }.attach()
+            TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->
+                tab.text = personArray[position]
+            }.attach()
+        } else {
+            val personArray = arrayOf("My Profile")
+
+            val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, "my")
+            adapter.item = personArray
+            binding.viewPager.adapter = adapter
+
+            TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->
+                tab.text = personArray[position]
+            }.attach()
+        }
     }
 }

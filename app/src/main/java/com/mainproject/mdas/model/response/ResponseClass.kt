@@ -27,7 +27,7 @@ sealed class ResponseClass{
         var scheme: List<SchemeClass> = ArrayList()
     ):ResponseClass()
 
-    class Hospital(var id: String?=null ,var imageUri: String?=null,var hospitalName: String?=null,var district: String?=null,var place: String?=null,var address: String?=null,var rating: String?=null) : ResponseClass()
+    class Hospital(var id: String?=null ,var imageUri: String?=null,var hospitalName: String?=null,var district: String?=null,var place: String?=null,var address: String?=null,var rating: String?=null,var disability: String?=null) : ResponseClass()
     class HospitalResponse(
         var status:Boolean = false,
         var message: String = "NO MESSAGE",

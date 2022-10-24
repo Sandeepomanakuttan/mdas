@@ -13,6 +13,7 @@ import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.progress
+import com.mainproject.mdas.utils.getPreference
 
 
 class viewPersonDetailsFragment :
@@ -24,11 +25,25 @@ class viewPersonDetailsFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+        val (userName, type) = getPreference(requireContext())
 
-        binding.constraintLayout4.isVisible = arguments?.getBoolean("page") != true
+        if (type == "Admin") {
+            binding.constraintLayout4.isVisible = arguments?.getBoolean("page") != true
+
+
+            arguments?.getString("child")?.let { viewModel.getUniqPerson(it) }
+            progress.isVisible = true
+        }else{
+            binding.constraintLayout4.isVisible = false
+            progress.isVisible = true
+            if (userName != null) {
+                viewModel.getUniqPerson(userName)
+            }
+        }
 
         if (!binding.constraintLayout4.isVisible) {
-            val layoutParams = (binding.scrollable.layoutParams as? ViewGroup.MarginLayoutParams)
+            val layoutParams =
+                (binding.scrollable.layoutParams as? ViewGroup.MarginLayoutParams)
             layoutParams?.setMargins(
                 0, 700, 0, 0
             )
@@ -36,11 +51,6 @@ class viewPersonDetailsFragment :
             binding.scrollable.layoutParams = layoutParams
 
         }
-        arguments?.getString("child")?.let { viewModel.getUniqPerson(it) }
-        progress.isVisible = true
-
-
-
         viewModel.personResponse.observe(viewLifecycleOwner) {
 
             if (it.status) {

@@ -21,6 +21,7 @@ companion object {
 
     val hospitalResponse: MutableLiveData<ResponseClass.HospitalResponse> = MutableLiveData()
     val personResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
+    val userResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
     val schemeResponse: MutableLiveData<ResponseClass.SchemeResponse> = MutableLiveData()
     val changeStatus: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -51,7 +52,7 @@ companion object {
         }
     }
 
-    fun getHospital()  {
+    fun getHospital() {
 
         hospitalRef.addValueEventListener(object :ValueEventListener{
             val response = ResponseClass.HospitalResponse()
@@ -65,6 +66,32 @@ companion object {
                 response.hospital=list
                 response.status = true
                     hospitalResponse.value=response
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.hospital= emptyList()
+                response.status = true
+                hospitalResponse.value=response
+            }
+        })
+
+
+    }
+
+    fun getHospital(disability:String) {
+
+        hospitalRef.orderByChild("disability").equalTo(disability).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.HospitalResponse()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = arrayListOf<ResponseClass.Hospital>()
+                for (singleSnap in snapshot.children){
+                    val data = singleSnap.getValue(ResponseClass.Hospital::class.java)
+                    list.add(data!!)
+                }
+                response.hospital=list
+                response.status = true
+                hospitalResponse.value=response
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -198,6 +225,28 @@ companion object {
             }
 
         }
+    }
+
+    fun getDetails(sharedNameValue: String?) {
+        UserRef.child(sharedNameValue.toString()).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.PersonResponse()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = arrayListOf<ResponseClass.Person>()
+                    val data = snapshot.getValue(ResponseClass.Person::class.java)
+                    list.add(data!!)
+
+                response.person=list
+                response.status = true
+                userResponse.value=response
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.person= emptyList()
+                response.status = true
+                userResponse.value=response
+            }
+        })
     }
 
 }

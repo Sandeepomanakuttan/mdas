@@ -1,5 +1,6 @@
 package com.mainproject.mdas.utils
 
+import android.content.Context
 import android.view.View
 import android.view.animation.Animation
 import com.google.firebase.database.FirebaseDatabase
@@ -39,4 +40,23 @@ fun View.startAnimations(animation: Animation, onEndListener: () -> Unit) {
     })
 
     this.startAnimation(animation)
+}
+
+fun preference(context: Context, userName:String,userType:String) {
+    val preference = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+    val edit = preference.edit()
+    edit.putString("userName",userName)
+    edit.putString("userType",userType)
+    edit.apply()
+}
+
+fun getPreference(context: Context): Pair<String?,String?> {
+    val preference = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+    val userName =preference.getString("userName",null)
+    val token = preference.getString("token",null)
+    return userName to token
+}
+
+fun clearPreference(context: Context) {
+    context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE).edit().clear().apply()
 }
