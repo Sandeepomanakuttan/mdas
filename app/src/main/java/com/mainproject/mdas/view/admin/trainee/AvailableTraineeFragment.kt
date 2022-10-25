@@ -1,60 +1,102 @@
 package com.mainproject.mdas.view.admin.trainee
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.mainproject.mdas.R
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.mainproject.mdas.databinding.FragmentAvailableTraineeBinding
+import com.mainproject.mdas.model.base.BaseFragments
+import com.mainproject.mdas.model.response.ResponseClass
+import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
+import com.mainproject.mdas.progress
+import com.mainproject.mdas.utils.RecyclerViewAdaptor
+import com.mainproject.mdas.utils.getPreference
+import com.mainproject.mdas.utils.traineeRef
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AvailableTraineeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AvailableTraineeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class AvailableTraineeFragment :
+    BaseFragments<FragmentAvailableTraineeBinding>(FragmentAvailableTraineeBinding::inflate) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var disable: String
+    lateinit var viewModel: AdminViewModel
+    lateinit var recyclerViewAdaptor: RecyclerViewAdaptor
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+        observer()
+        val (user, type, disability) = getPreference(requireContext())
+
+        disable = disability.toString()
+        if (type == "Admin") {
+
+        } else {
+            recyclerViewAdaptor = RecyclerViewAdaptor(requireContext())
+            viewModel.getTrainee(disability, "Available")
+            progress.isVisible = true
+            recyclerViewAdaptor.label = "user"
+        }
+
+
+    }
+
+    private fun observer() {
+        viewModel.traineeResponse.observe(viewLifecycleOwner) {
+            progress.isVisible = false
+            if (it.status) {
+
+                    setTrainee(it.trainee)
+
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_available_trainee, container, false)
+    private fun setTrainee(trainee: List<ResponseClass.TraineeClass>) {
+        Toast.makeText(requireContext(), "called", Toast.LENGTH_SHORT).show()
+        if (trainee.isNotEmpty()) {
+            binding.recyclerView.isVisible = true
+            binding.empty.isVisible = false
+            binding.recyclerView.apply {
+                layoutManager = GridLayoutManager(requireContext(), 2)
+                recyclerViewAdaptor.item = trainee
+                adapter = recyclerViewAdaptor
+                setHasFixedSize(true)
+            }
+        } else {
+            binding.recyclerView.isVisible = false
+            binding.empty.isVisible = true
+        }
+        itemClickListener(recyclerViewAdaptor)
+
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AvailableTraineeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AvailableTraineeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    private fun itemClickListener(recycleViewAdaptor: RecyclerViewAdaptor) {
+        recycleViewAdaptor.itemClickListener = { view, item, position ->
+
+            when (item) {
+                is ResponseClass.TraineeClass -> {
+                    progress.isVisible = true
+                    item.status = "connect"
+                    traineeRef.child(item.traineeName!!).setValue(item).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            viewModel.getTrainee(disable, "Available")
+                            Toast.makeText(
+                                context,
+                                "Successfully Send Connect Request Trainee will be Contact you",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
                 }
+                else -> {}
             }
+
+        }
     }
+
 }

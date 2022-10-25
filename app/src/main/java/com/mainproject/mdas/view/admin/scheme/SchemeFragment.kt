@@ -2,6 +2,7 @@ package com.mainproject.mdas.view.admin.scheme
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mainproject.mdas.databinding.FragmentSchemeBinding
 import com.mainproject.mdas.model.base.BaseFragments
@@ -15,7 +16,11 @@ class SchemeFragment : BaseFragments<FragmentSchemeBinding>(FragmentSchemeBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val (userName, type) = getPreference(requireContext())
+        val array = getPreference(requireContext())
+
+        val type = array[1]
+        val user = array[0]
+
 
         if (type == "Admin") {
             val schemeArray = arrayOf("View Scheme","Add Scheme")
@@ -28,8 +33,7 @@ class SchemeFragment : BaseFragments<FragmentSchemeBinding>(FragmentSchemeBindin
             }.attach()
         }
         else{
-//            CommonSchemesFragment()
-            val schemeArray = arrayOf("Approve","Pending","Reject")
+            val schemeArray = arrayOf("All Scheme","Approve","Pending","Reject")
             val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, "commonScheme")
             adapter.item = schemeArray
             binding.viewPager.adapter = adapter

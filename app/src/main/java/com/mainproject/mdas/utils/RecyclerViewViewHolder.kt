@@ -8,13 +8,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.mainproject.mdas.databinding.FragmentPersonAddBinding
+import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.HospitalViewBinding
 import com.mainproject.mdas.databinding.ItemHomeHospitalViewBinding
 import com.mainproject.mdas.databinding.ItemSchemeViewBinding
 import com.mainproject.mdas.databinding.PersonViewBinding
 import com.mainproject.mdas.databinding.TraineeViewBinding
 import com.mainproject.mdas.model.response.ResponseClass
+import com.mainproject.mdas.progress
 
 sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolder(binding.root) {
 
@@ -22,10 +23,18 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
 
     class TraineeViewHolder(private val binding: TraineeViewBinding,val context: Context) : RecyclerViewViewHolder(binding){
 
-        fun binding(item: ResponseClass.TraineeClass){
+        fun binding(item: ResponseClass.TraineeClass, label: String){
+            binding.connect.isVisible = label == "user" && item.status == "Available"
+
+            Toast.makeText(context, item.status.toString(), Toast.LENGTH_SHORT).show()
+
             binding.TraineeName.text=item.traineeName
-            binding.experience.text = "2"
+            binding.experience.text = String.format(context.resources.getString(R.string.trainee_exp),item.field,item.experience)
             Glide.with(context).load(item.traineeImg).into(binding.imgTrainee)
+
+            binding.connect.setOnClickListener {
+              itemClickListener?.invoke(it,item,adapterPosition)
+            }
         }
     }
 
@@ -39,7 +48,6 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
                 Glide.with(context).load(item.img).into(binding.img)
             }
             else{
-                Log.e("itemData",item.img.toString())
 
                 Glide.with(context).load("https://as2.ftcdn.net/v2/jpg/01/18/03/35/1000_F_118033506_uMrhnrjBWBxVE9sYGTgBht8S5liVnIeY.jpg").into(binding.img)
             }
@@ -76,7 +84,6 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
         fun binding(item: ResponseClass.Hospital){
             binding.hospitalName.text=item.hospitalName
             binding.disctrict.text = item.district
-            Log.e("hospital",item.imageUri.toString())
             Glide.with(context).load(item.imageUri).into(binding.imgHospital)
         }
     }

@@ -9,9 +9,10 @@ sealed class ResponseClass{
         var id:String?=null,
         var traineeName: String?=null,
         var field: String?=null,
+        var experience: String?=null,
         var panchayath: String?=null, var status:String?=null,
         var traineeImg: String ?=null) :ResponseClass()
-    class SchemeClass(var id:String?=null,var schemeName: String?=null,var disability:String?=null ,var panchayath : String?=null,var schemeImg: String?=null,var amount : String?=null,var type:String?=null , var description :String?=null,var month:String?=null) :ResponseClass()
+    class SchemeClass(var id:String?=null,var schemeName: String?=null,var disability:String?=null ,var panchayath : String?=null,var schemeImg: String?=null,var amount : String?=null,var type:String?=null , var description :String?=null,var month:String?=null,var status: String?=null) :ResponseClass()
 
     class UserResponse(var status:Boolean = false,var message:String?=null,var user: Person?=null)
 
@@ -43,5 +44,11 @@ sealed class ResponseClass{
     class Person(var personName: String?=null,var houseName: String?=null,var district: String?=null,var panchayath: String?=null,var id: String?=null,var img:String?=null,var guardian:String?=null,var imgGuardianAdhar:String?=null,var disability: String?=null,var percentage: String?=null,var imgDisability: String?=null,var adhar: String?=null,var imgAdhar: String?=null,var status: String?=null,var phone: String?=null,var type: String?=null) :ResponseClass()
 
     class AgreeScheme(var id: String?=null,var schemeId : String?=null,var personId:String?=null,var status: String?=null)
+
+    class MainSchemeResponse( var status:Boolean = false,
+                              var message: String = "NO MESSAGE",
+                              var person: Person? = null,
+                              var scheme: List<SchemeClass>
+    )
 
 }

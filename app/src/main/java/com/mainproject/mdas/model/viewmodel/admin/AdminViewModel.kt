@@ -1,5 +1,6 @@
 package com.mainproject.mdas.model.viewmodel.admin
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,7 @@ companion object {
     val personResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
     val userResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
     val schemeResponse: MutableLiveData<ResponseClass.SchemeResponse> = MutableLiveData()
+    val traineeResponse: MutableLiveData<ResponseClass.RequestCall> = MutableLiveData()
     val changeStatus: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -156,6 +158,23 @@ companion object {
 
     }
 
+    fun getAgreeScheme(user: String, s: String) {
+        agreeSchemeRef.child(user).orderByChild("status").equalTo(s).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    val list = arrayListOf<ResponseClass.AgreeScheme>()
+                    for (value in snapshot.children){
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
     fun getAgreeScheme() {
         agreeSchemeRef.orderByChild("status").equalTo("apply").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -213,6 +232,89 @@ companion object {
         })
     }
 
+    fun getScheme(disability: String) {
+        schemeRef.orderByChild("disability").equalTo(disability).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.SchemeResponse()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val list = arrayListOf<ResponseClass.SchemeClass>()
+                    for (singleSnap in snapshot.children) {
+                        val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
+                        list.add(data!!)
+                    }
+                    response.scheme = list
+                    response.status = true
+                    schemeResponse.value = response
+                }else{
+                    response.scheme = emptyList()
+                    response.status = true
+                    schemeResponse.value = response
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.scheme= emptyList()
+                response.status = true
+                schemeResponse.value=response
+            }
+        })
+    }
+
+    fun getScheme(disability: String,user: String) {
+        schemeRef.orderByChild("disability").equalTo(disability).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.SchemeResponse()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val list = arrayListOf<ResponseClass.SchemeClass>()
+                    for (singleSnap in snapshot.children) {
+                        val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
+                        agreeSchemeRef.child(user).child(data?.id.toString()).addValueEventListener(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                               if (snapshot.exists()){
+
+                               }else{
+
+                                   list.add(data!!)
+                                   Log.e("hello",data.description.toString())
+
+                               }
+                                response.scheme = list
+                                response.status = true
+                                schemeResponse.value = response
+                            }
+
+
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+                        })
+
+
+
+
+
+                    }
+                    Log.e("hello","b")
+
+                    Log.e("hello","e")
+
+                }else{
+                    response.scheme = emptyList()
+                    response.status = true
+                    schemeResponse.value = response
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.scheme= emptyList()
+                response.status = true
+                schemeResponse.value=response
+            }
+        })
+    }
+
     fun update(phone: String?) {
         phone?.let {
             UserRef.child(phone).child("status").setValue("Verify").addOnCompleteListener {
@@ -247,6 +349,100 @@ companion object {
                 userResponse.value=response
             }
         })
+    }
+
+    fun getTrainee(disability: String?) {
+
+        traineeRef.orderByChild("field").equalTo(disability).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.RequestCall()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = arrayListOf<ResponseClass.TraineeClass>()
+                if (snapshot.exists()) {
+                    for (singleSnap in snapshot.children) {
+                        val data = singleSnap.getValue(ResponseClass.TraineeClass::class.java)
+                        list.add(data!!)
+                    }
+                    response.trainee = list
+                    response.status = true
+                    traineeResponse.value = response
+                }else{
+                    response.trainee = emptyList()
+                    response.status = true
+                    traineeResponse.value = response
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.trainee= emptyList()
+                response.status = true
+                traineeResponse.value=response
+            }
+        })
+
+
+    }
+
+    fun getTrainee() {
+
+        traineeRef.addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.RequestCall()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = arrayListOf<ResponseClass.TraineeClass>()
+                for (singleSnap in snapshot.children){
+                    val data = singleSnap.getValue(ResponseClass.TraineeClass::class.java)
+                    list.add(data!!)
+                }
+                response.trainee=list
+                response.status = true
+                traineeResponse.value=response
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.trainee= emptyList()
+                response.status = true
+                traineeResponse.value=response
+            }
+        })
+
+
+    }
+
+
+
+    fun getTrainee(disability: String?, s: String) {
+
+        traineeRef.orderByChild("field").equalTo(disability).addValueEventListener(object :ValueEventListener{
+            val response = ResponseClass.RequestCall()
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                val list = arrayListOf<ResponseClass.TraineeClass>()
+                for (singleSnap in snapshot.children) {
+                    val data = singleSnap.getValue(ResponseClass.TraineeClass::class.java)
+                    if (data?.status == s)
+                        list.add(data)
+                }
+                response.trainee = list
+                response.status = true
+                traineeResponse.value = response
+            }
+                else{
+                    response.trainee = emptyList()
+                    response.status = true
+                    traineeResponse.value = response
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                response.trainee= emptyList()
+                response.status = false
+                traineeResponse.value=response
+            }
+        })
+
+
     }
 
 }

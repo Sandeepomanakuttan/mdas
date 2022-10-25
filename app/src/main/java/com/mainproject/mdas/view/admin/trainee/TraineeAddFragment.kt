@@ -58,7 +58,18 @@ class TraineeAddFragment : BaseFragments<FragmentTraineeAddBinding>(FragmentTrai
         // spinner disable end
 
         //spinner panchayath
+        val spinner1 = ArrayAdapter(
+            requireContext(),
+            com.bumptech.glide.R.layout.support_simple_spinner_dropdown_item,
+            panchayatArray
+        )
 
+        spinner1.setDropDownViewResource(
+            android.R.layout
+                .simple_spinner_dropdown_item
+        )
+
+        binding.spinnerPachayath.adapter = spinner1
 
 
         binding.imgTrainee.setOnClickListener {
@@ -71,12 +82,15 @@ class TraineeAddFragment : BaseFragments<FragmentTraineeAddBinding>(FragmentTrai
             }
             else if (binding.etTraineeName.text.toString().isEmpty()){
                 binding.etTraineeName.error = "Please Fill Trainee Name"
-            }else if (binding.spinnerField.selectedItem.toString() == disableArray[0]){
+            } else if (binding.exp.text.toString().isEmpty()){
+                binding.etTraineeName.error = "Please Fill Trainee Experience"
+            }
+            else if (binding.spinnerField.selectedItem.toString() == disableArray[0]){
                 Toast.makeText(requireContext(), "please select trainer domain", Toast.LENGTH_SHORT).show()
             }else if(binding.spinnerPachayath.selectedItem.toString() == panchayatArray[0]){
                 Toast.makeText(requireContext(), "please select trainer Available Panchayath", Toast.LENGTH_SHORT).show()
             }else{
-                val trainee = ResponseClass.TraineeClass(traineeName = binding.etTraineeName.text.toString(), field = binding.spinnerField.selectedItem.toString(), panchayath = binding.spinnerPachayath.selectedItem.toString(), status = "Available", traineeImg = imageUri.toString())
+                val trainee = ResponseClass.TraineeClass(traineeName = binding.etTraineeName.text.toString(), field = binding.spinnerField.selectedItem.toString(), panchayath = binding.spinnerPachayath.selectedItem.toString(), status = "Available", traineeImg = imageUri.toString(), experience = binding.exp.text.trim().toString())
                 viewModel.addTrainee(trainee)
                 progress.isVisible = true
             }

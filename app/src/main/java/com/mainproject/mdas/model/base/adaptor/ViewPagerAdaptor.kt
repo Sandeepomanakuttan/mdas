@@ -76,8 +76,9 @@ public class ViewPagerAdapter(
             }
             "commonScheme" ->{
                 frag = when(position) {
-                    0 -> ApproveSchemeFragment()
-                    1 -> PendingSchemeFragment()
+                    0 -> SchemeViewFragment()
+                    1 -> ApproveSchemeFragment()
+                    2 -> PendingSchemeFragment()
                     else -> RejectSchemeFragment()
                 }
             }

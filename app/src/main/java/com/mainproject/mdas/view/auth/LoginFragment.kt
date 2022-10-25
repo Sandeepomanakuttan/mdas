@@ -20,15 +20,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import com.mainproject.mdas.HomeFragment
 import com.mainproject.mdas.R
-import com.mainproject.mdas.RegistrationFragment
 import com.mainproject.mdas.databinding.FragmentLoginBinding
-import com.mainproject.mdas.model.repository.auth.AuthRepository
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
-import com.mainproject.mdas.model.viewmodel.User
 import com.mainproject.mdas.utils.preference
 
 
@@ -82,7 +77,7 @@ class LoginFragment : Fragment() {
                                 bundle.putString("disability",it.user?.disability)
 
                                 it.user?.phone?.let {phone ->
-                                    preference(requireContext(),phone, userType = it.user?.type!!)
+                                    preference(requireContext(),phone, userType = it.user?.type!!,it.user?.disability)
 
                                 }
 

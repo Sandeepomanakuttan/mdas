@@ -15,16 +15,22 @@
     <string name="_4_5_120_reviews">%s | %s Reviews</string>
     <string name="trainee_exp">%s, %s years experience</string>
     <string name="hospital">Hospital</string>
-    <string name="write_hospital_description">write Hospital Description...</string>
-    <string name="place">Place...</string>
+    <string name="write_hospital_description">write Hospital Description…</string>
+    <string name="place">Place…</string>
     <string name="hospital_name">hospital Name</string>
     <string name="person_name">Person Name</string>
     <string name="enter_house_name">Enter House Name</string>
     <string name="enter_panchayth_name">Enter Panchayth Name</string>
     <string name="name">Name : </string>
     <string name="house_name">House Name</string>
-    <string name="address">Address...</string>
+    <string name="address">Address…</string>
     <string name="let_s_find_your_hospitals">Let’s find your hospitals</string>
+    <string name="let_s_trainee">Let’s Look your trainees</string>
+    <string name="let_s_trainee_av">Let’s Find yours Available trainees</string>
+    <string name="let_scheme">Let’s Find yours All Schemes</string>
+    <string name="let_scheme_av">Let’s Find yours All Available Schemes</string>
+    <string name="let_scheme_pn">Let’s Find yours Pending Schemes</string>
+    <string name="let_scheme_rj">Let’s Find yours Reject Schemes</string>
     <string name="let_s_find_your_users">Let’s find your Users</string>
     <string name="schemes">Schemes</string>
     <string name="show_all">Show All</string>
@@ -43,5 +49,8 @@
     <string name="low_vission">Low Vission</string>
     <string name="percentage">Percentage :</string>
     <string name="_40">%s %</string>
+    <string name="trainee_name">Trainee Name</string>
+    <string name="experience">Experience</string>
+    <string name="enter_hospital_details">Enter Hospital Details</string>
 
 </resources>

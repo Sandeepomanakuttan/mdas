@@ -13,10 +13,10 @@ val disableArray = arrayOf("select trainee Field","Leprosy Cured Person","Cerebr
 val disableArrays = arrayOf("Select disability Type","Leprosy Cured Person","Cerebral Palsy","Dwarfism","Muscular Dystrophy","Acid Attack Victims","Blindness","Low Vision","Deaf","Hard of Hearing","Speech and Language Disability","Specific Learning Disabilities","Autism Spectrum Disorder")
 
 var monthName = arrayOf("",
-    "January", "February",
-    "March", "April", "May", "June", "July",
-    "August", "September", "October", "November",
-    "December"
+    "Jan", "Feb",
+    "Mar", "Apr", "May", "June", "July",
+    "Aug", "Sep", "Oct", "Nov",
+    "Dec"
 )
 
 var storageRef = FirebaseStorage.getInstance().reference
@@ -42,19 +42,25 @@ fun View.startAnimations(animation: Animation, onEndListener: () -> Unit) {
     this.startAnimation(animation)
 }
 
-fun preference(context: Context, userName:String,userType:String) {
+fun preference(context: Context, userName: String, userType: String, disability: String?=null) {
     val preference = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
     val edit = preference.edit()
     edit.putString("userName",userName)
-    edit.putString("userType",userType)
+    edit.putString("type",userType)
+    edit.putString("disability",disability)
     edit.apply()
 }
 
-fun getPreference(context: Context): Pair<String?,String?> {
+fun getPreference(context: Context): ArrayList<String?> {
     val preference = context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
     val userName =preference.getString("userName",null)
-    val token = preference.getString("token",null)
-    return userName to token
+    val type = preference.getString("type",null)
+    val disability = preference.getString("disability",null)
+    val array: ArrayList<String?> = arrayListOf()
+    array.add(userName)
+    array.add(type)
+    array.add(disability)
+    return array
 }
 
 fun clearPreference(context: Context) {

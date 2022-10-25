@@ -17,7 +17,7 @@ class TrainingFragment :BaseFragments<FragmentTrainingBinding>(FragmentTrainingB
 
         super.onViewCreated(view, savedInstanceState)
 
-        val (userName, type) = getPreference(requireContext())
+        val (userName, type,disable) = getPreference(requireContext())
 
         if (type == "Admin"){
             val traineeArray = arrayOf("View Trainees","Add Trainee")

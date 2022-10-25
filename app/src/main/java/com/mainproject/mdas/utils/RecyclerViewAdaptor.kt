@@ -42,7 +42,7 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
 
         return when (holder) {
             is RecyclerViewViewHolder.PersonViewHolder -> holder.binding(item[position] as ResponseClass.Person)
-            is RecyclerViewViewHolder.TraineeViewHolder -> holder.binding(item[position] as ResponseClass.TraineeClass)
+            is RecyclerViewViewHolder.TraineeViewHolder -> holder.binding(item[position] as ResponseClass.TraineeClass,label)
             is RecyclerViewViewHolder.HospitalViewHolder -> holder.binding(item[position] as ResponseClass.Hospital)
             is RecyclerViewViewHolder.HomeHospitalViewHolder -> holder.binding(item[position] as ResponseClass.Hospital)
             is RecyclerViewViewHolder.SchemeViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)

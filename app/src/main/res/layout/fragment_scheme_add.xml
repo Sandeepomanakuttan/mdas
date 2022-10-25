@@ -160,7 +160,7 @@
             android:maxLines="4"
             android:gravity="start"
             android:background="@drawable/edit_background"
-            android:hint="@string/amount"
+            android:hint="@string/enter_hospital_details"
             android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="@dimen/_10sdp"

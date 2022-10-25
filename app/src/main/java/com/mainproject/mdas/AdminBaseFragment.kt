@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+var navView: BottomNavigationView?=null
 
 
 class AdminBaseFragment :  Fragment(){
@@ -27,8 +28,8 @@ class AdminBaseFragment :  Fragment(){
         val navHostFragment = childFragmentManager.findFragmentById(
             R.id.nav_host_fragment
         ) as NavHostFragment
-        val navView =viewer.findViewById<BottomNavigationView>(com.mainproject.mdas.R.id.navView)
-        navView.setupWithNavController(navHostFragment.navController)
+        navView =viewer.findViewById(R.id.navView)
+        navView?.setupWithNavController(navHostFragment.navController)
     }
 
 

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/_200sdp"
-    android:layout_height="@dimen/_210sdp"
+    android:layout_width="@dimen/_185sdp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_12sdp"
+    android:layout_marginTop="@dimen/_12sdp"
+    android:paddingBottom="@dimen/_16sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_16sdp"
      app:cardElevation="@dimen/_4sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <ImageView
             android:id="@+id/imgTrainee"
@@ -40,13 +43,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:textColor="#817D7D"
-            android:text="@string/trainee_exp"
-            android:textSize="12sp"
             android:gravity="center"
+            android:text="@string/trainee_exp"
+            android:textColor="#817D7D"
+            android:textSize="12sp"
+            android:paddingBottom="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Trainee_name" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/connect"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@color/mainColor"
+            android:text="Connect"
+            android:visibility="gone"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/experience" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

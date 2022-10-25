@@ -6,7 +6,6 @@ import android.os.Looper
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mainproject.mdas.databinding.FragmentSplashScreenBinding
 import com.mainproject.mdas.model.base.BaseFragments
@@ -38,7 +37,7 @@ class SplashScreenFragment :
 //                        )
 //                    )
 
-                    preference(requireContext(),"9497039910","User")
+                    preference(requireContext(), "9497039910", "User","Low Vision")
 
                     val (user,type) = getPreference(requireContext())
 

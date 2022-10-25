@@ -1,11 +1,7 @@
 package com.mainproject.mdas.view.admin.scheme
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +13,7 @@ import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.progress
 import com.mainproject.mdas.utils.RecyclerViewAdaptor
+import com.mainproject.mdas.utils.getPreference
 
 class SchemeViewFragment : BaseFragments<FragmentSchemeViewBinding>(FragmentSchemeViewBinding::inflate) {
 
@@ -24,11 +21,20 @@ class SchemeViewFragment : BaseFragments<FragmentSchemeViewBinding>(FragmentSche
     lateinit var recyclerViewAdaptor: RecyclerViewAdaptor
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recyclerViewAdaptor = RecyclerViewAdaptor(requireContext())
         viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
-        viewModel.getScheme()
-        progress.isVisible = true
+        recyclerViewAdaptor = RecyclerViewAdaptor(requireContext())
+
+        val (user,type,disability) = getPreference(requireContext())
+
+        if (type != "Admin"){
+            viewModel.getScheme(disability.toString())
+            progress.isVisible = true
+        }else{
+            viewModel.getScheme()
+            progress.isVisible = true
+        }
+
+
 
         observer()
 
