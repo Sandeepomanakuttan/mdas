@@ -52,5 +52,6 @@
     <string name="trainee_name">Trainee Name</string>
     <string name="experience">Experience</string>
     <string name="enter_hospital_details">Enter Hospital Details</string>
+    <string name="apply">Apply</string>
 
 </resources>

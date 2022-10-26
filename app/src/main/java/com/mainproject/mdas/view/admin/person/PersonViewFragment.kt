@@ -34,7 +34,7 @@ class PersonViewFragment : BaseFragments<FragmentPersonViewBinding>(FragmentPers
 
         viewModel.personResponse.observe(viewLifecycleOwner){
             if (it.status){
-//
+
                 binding.recyclerView.apply {
                     layoutManager = LinearLayoutManager(requireContext())
                     recycleViewAdaptor.item = it.person

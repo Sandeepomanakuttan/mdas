@@ -36,6 +36,7 @@ public class ViewPagerAdapter(
         notifyDataSetChanged()
     }
 
+
     override fun getItemCount(): Int {
         return item.size
     }
@@ -82,10 +83,17 @@ public class ViewPagerAdapter(
                     else -> RejectSchemeFragment()
                 }
             }
+
+            "common" ->{
+                frag = when(position) {
+                    0 -> ApproveSchemeFragment()
+                    1 -> PendingSchemeFragment()
+                    else -> RejectSchemeFragment()
+                }
+            }
             "user Trainee" ->{
                 frag = when (position){
                     0 -> TraineeViewFragment()
-
                     else -> AvailableTraineeFragment()
                 }
             }

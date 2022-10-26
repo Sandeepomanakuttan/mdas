@@ -12,6 +12,7 @@ import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.HospitalViewBinding
 import com.mainproject.mdas.databinding.ItemHomeHospitalViewBinding
 import com.mainproject.mdas.databinding.ItemSchemeViewBinding
+import com.mainproject.mdas.databinding.ItemUserSchemeViewBinding
 import com.mainproject.mdas.databinding.PersonViewBinding
 import com.mainproject.mdas.databinding.TraineeViewBinding
 import com.mainproject.mdas.model.response.ResponseClass
@@ -97,6 +98,24 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
             binding.disability.text = schemeClass.disability
             binding.price.text = schemeClass.amount
             binding.month.text = monthName[schemeClass.month?.toInt()!!]
+
+        }
+
+    }
+
+    class SchemeUserViewHolder(private val binding: ItemUserSchemeViewBinding ,val context: Context) : RecyclerViewViewHolder(binding) {
+        fun binding(schemeClass: ResponseClass.SchemeClass) {
+
+            binding.schemeName.text = schemeClass.schemeName
+            Glide.with(context).load(schemeClass.schemeImg).into(binding.schemeImg)
+            binding.desc.text= schemeClass.description
+            binding.disability.text = schemeClass.disability
+            binding.price.text = schemeClass.amount
+            binding.month.text = monthName[schemeClass.month?.toInt()!!]
+
+            binding.button2.setOnClickListener {
+                itemClickListener?.invoke(it,schemeClass,adapterPosition)
+            }
 
         }
 

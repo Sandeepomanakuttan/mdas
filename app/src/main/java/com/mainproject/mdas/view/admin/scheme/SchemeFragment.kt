@@ -33,7 +33,7 @@ class SchemeFragment : BaseFragments<FragmentSchemeBinding>(FragmentSchemeBindin
             }.attach()
         }
         else{
-            val schemeArray = arrayOf("All Scheme","Approve","Pending","Reject")
+            val schemeArray = arrayOf("All Scheme","All Approve","All Process","All Reject")
             val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, "commonScheme")
             adapter.item = schemeArray
             binding.viewPager.adapter = adapter

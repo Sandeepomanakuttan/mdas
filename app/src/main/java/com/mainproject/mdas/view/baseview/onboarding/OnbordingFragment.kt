@@ -25,12 +25,4 @@ class OnbordingFragment : BaseFragments<FragmentOnbordingBinding>(FragmentOnbord
         else
             findNavController().navigate(com.mainproject.mdas.R.id.action_onbordingFragment_to_loginFragment)
     }
-
-//    private fun RunAnimation() {
-//        val a: Animation = AnimationUtils.loadAnimation(requireContext(), com.mainproject.mdas.R.anim.animate_fade_enter)
-//        a.reset()
-//        val tv = findViewById(R.id.firstTextView) as TextView
-//        tv.clearAnimation()
-//        tv.startAnimation(a)
-//    }
 }

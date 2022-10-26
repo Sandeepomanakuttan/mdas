@@ -21,13 +21,20 @@ private lateinit var recyclerView: RecyclerViewAdaptor
  lateinit var viewModel: AdminViewModel
  val sharedPrefFile = "kotlinsharedpreference"
 
+    var userId:String?=null
+    var desable:String?=null
+    lateinit var schemeList:List<ResponseClass.SchemeClass>
+    lateinit var List:ArrayList<ResponseClass.SchemeClass>
+    lateinit var agreeSchemeList:List<ResponseClass.SchemeClass>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
 
+        schemeList = arrayListOf()
+        agreeSchemeList = arrayListOf()
+        List = arrayListOf()
     val (userName,type,disable) = getPreference(requireContext())
 
-        Log.e("shared",userName.toString())
         if (userName != null ){
             viewModel.getDetails(userName)
             Toast.makeText(requireContext(), userName.toString(), Toast.LENGTH_SHORT).show()
@@ -63,6 +70,17 @@ private lateinit var recyclerView: RecyclerViewAdaptor
     }
 
     private fun observers() {
+
+        viewModel.agreeSchemeResponse.observe(viewLifecycleOwner){
+            if (it.status){
+                if (it.scheme.isNotEmpty()){
+                    agreeSchemeList = it.scheme
+                    progress.isVisible = false
+                    viewModel.getUserScheme(desable.toString())
+                }
+            }
+        }
+
         viewModel.hospitalResponse.observe(viewLifecycleOwner){
 
             progress.isVisible = false
@@ -82,8 +100,11 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                 Glide.with(requireContext()).load(it.person[0].img).into(binding.profileImage)
                 binding.name.text = it.person[0].personName
                 if (it.person[0].type == "User"){
+                    progress.isVisible = true
+                    userId = it.person[0].phone
+                    desable = it.person[0].disability
                     viewModel.getHospital(it.person[0].disability.toString())
-                    viewModel.getScheme(it.person[0].disability.toString(),it.person[0].phone.toString())
+                    viewModel.agreeScheme(it.person[0].phone.toString())
                 }else{
                     viewModel.getHospital()
                     viewModel.getAgreeScheme()
@@ -94,12 +115,30 @@ private lateinit var recyclerView: RecyclerViewAdaptor
     }
 
     private fun setScheme(scheme: List<ResponseClass.SchemeClass>) {
+        val(user,type,dis) = getPreference(requireContext())
         if (scheme.isNotEmpty()){
-            binding.recyclerViewScheme.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewAdaptor.item = scheme
-                adapter = recyclerViewAdaptor
+            List.clear()
+            if (type != "Admin") {
+                for (i in scheme){
+                    var flag =0
+                    for (y in agreeSchemeList){
+                        if(i.id == y.id){
+                            flag=1
+                        }
+                    }
+                    if (flag==0){
+                      List.add(i)
+                    }
+                }
+                binding.recyclerViewScheme.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    recyclerViewAdaptor.item = List
+                    recyclerViewAdaptor.label = "userHome"
+                    adapter = recyclerViewAdaptor
+                    setHasFixedSize(true)
+                }
             }
+            itemClickListener(recyclerViewAdaptor)
         }else{
             binding.empty.isVisible = true
             binding.recyclerViewScheme.isVisible = false
@@ -108,7 +147,7 @@ private lateinit var recyclerView: RecyclerViewAdaptor
 
     private fun setHospitalView(hospital: List<ResponseClass.Hospital>) {
 
-        if (hospital.isEmpty()){
+        if (hospital.isNotEmpty()){
             binding.emptyHost.isVisible = false
             binding.recyclerViewHospital.isVisible = true
             binding.btnShowHospital.isVisible = true
@@ -137,10 +176,10 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                     agreeSchemeRef.child(user!!).child(item.id!!).setValue(item).addOnCompleteListener {
                         if (it.isSuccessful) {
 
-//                            viewModel.getTrainee(disable, "Available")
+                            progress.isVisible = false
                             Toast.makeText(
                                 context,
-                                "Successfully Send Connect Request Trainee will be Contact you",
+                                "Successfully Applied",
                                 Toast.LENGTH_SHORT
                             ).show()
 

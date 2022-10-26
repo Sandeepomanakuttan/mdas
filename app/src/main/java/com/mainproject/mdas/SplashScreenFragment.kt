@@ -30,14 +30,7 @@ class SplashScreenFragment :
                 animationView.visibility = View.INVISIBLE
 
                 animationView.startAnimations(animation) {
-//                    root.setBackgroundColor(
-//                        ContextCompat.getColor(
-//                            requireContext(),
-//                            R.color.purple_200
-//                        )
-//                    )
 
-                    preference(requireContext(), "9497039910", "User","Low Vision")
 
                     val (user,type) = getPreference(requireContext())
 

@@ -86,7 +86,7 @@ class viewPersonDetailsFragment :
 
             if (it) {
                 progress.isVisible = false
-                Toast.makeText(requireContext(), "Successfully Added..", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Approve Person..", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         }

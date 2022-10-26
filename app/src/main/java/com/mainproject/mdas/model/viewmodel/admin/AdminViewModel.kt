@@ -24,6 +24,7 @@ companion object {
     val personResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
     val userResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
     val schemeResponse: MutableLiveData<ResponseClass.SchemeResponse> = MutableLiveData()
+    val agreeSchemeResponse: MutableLiveData<ResponseClass.SchemeResponse> = MutableLiveData()
     val traineeResponse: MutableLiveData<ResponseClass.RequestCall> = MutableLiveData()
     val changeStatus: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -159,30 +160,53 @@ companion object {
     }
 
     fun getAgreeScheme(user: String, s: String) {
+        val response = ResponseClass.SchemeResponse()
+
         agreeSchemeRef.child(user).orderByChild("status").equalTo(s).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-                    val list = arrayListOf<ResponseClass.AgreeScheme>()
-                    for (value in snapshot.children){
-
+                val list = arrayListOf<ResponseClass.SchemeClass>()
+                if(snapshot.exists()) {
+                    for (singleSnap in snapshot.children) {
+                        val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
+                        list.add(data!!)
                     }
+                    response.scheme = list
+                    response.status = true
+                    agreeSchemeResponse.value = response
+                }else{
+                    response.scheme = list
+                    response.status = true
+                    agreeSchemeResponse.value = response
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                response.scheme= emptyList()
+                response.status = true
+                agreeSchemeResponse.value=response
             }
         })
     }
 
     fun getAgreeScheme() {
+        val response = ResponseClass.SchemeResponse()
+
         agreeSchemeRef.orderByChild("status").equalTo("apply").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-
+                val list = arrayListOf<ResponseClass.SchemeClass>()
+                for (singleSnap in snapshot.children){
+                    val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
+                    list.add(data!!)
+                }
+                response.scheme=list
+                response.status = true
+                agreeSchemeResponse.value=response
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                response.scheme= emptyList()
+                response.status = true
+                agreeSchemeResponse.value=response
             }
         })
     }
@@ -261,7 +285,7 @@ companion object {
         })
     }
 
-    fun getScheme(disability: String,user: String) {
+    fun getUserScheme(disability: String) {
         schemeRef.orderByChild("disability").equalTo(disability).addValueEventListener(object :ValueEventListener{
             val response = ResponseClass.SchemeResponse()
 
@@ -270,35 +294,11 @@ companion object {
                     val list = arrayListOf<ResponseClass.SchemeClass>()
                     for (singleSnap in snapshot.children) {
                         val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
-                        agreeSchemeRef.child(user).child(data?.id.toString()).addValueEventListener(object : ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                               if (snapshot.exists()){
-
-                               }else{
-
-                                   list.add(data!!)
-                                   Log.e("hello",data.description.toString())
-
-                               }
-                                response.scheme = list
-                                response.status = true
-                                schemeResponse.value = response
-                            }
-
-
-                            override fun onCancelled(error: DatabaseError) {
-
-                            }
-                        })
-
-
-
-
-
+                        list.add(data!!)
                     }
-                    Log.e("hello","b")
-
-                    Log.e("hello","e")
+                    response.scheme = list
+                    response.status = true
+                    schemeResponse.value = response
 
                 }else{
                     response.scheme = emptyList()
@@ -311,6 +311,43 @@ companion object {
                 response.scheme= emptyList()
                 response.status = true
                 schemeResponse.value=response
+            }
+        })
+    }
+
+    fun  agreeScheme(user:String){
+        val response = ResponseClass.SchemeResponse()
+        agreeSchemeRef.child(user).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = arrayListOf<ResponseClass.SchemeClass>()
+                if (snapshot.exists()){
+                    for (i in snapshot.children){
+                        val data = i.getValue(ResponseClass.SchemeClass::class.java)
+                        list.add(data!!)
+                        Log.e("hello", data.description.toString())
+
+                    }
+                    response.scheme=list
+                    response.status = true
+                    agreeSchemeResponse.value = response
+
+                }else{
+                    response.scheme= emptyList()
+                    response.status = true
+                    agreeSchemeResponse.value = response
+
+                }
+//                response.scheme = list
+//                response.status = true
+//                schemeResponse.value = response
+//                Log.e("hello","heloo.toString()")
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                response.scheme= emptyList()
+                response.status = false
+                schemeResponse.value = response
             }
         })
     }

@@ -12,7 +12,7 @@ sealed class ResponseClass{
         var experience: String?=null,
         var panchayath: String?=null, var status:String?=null,
         var traineeImg: String ?=null) :ResponseClass()
-    class SchemeClass(var id:String?=null,var schemeName: String?=null,var disability:String?=null ,var panchayath : String?=null,var schemeImg: String?=null,var amount : String?=null,var type:String?=null , var description :String?=null,var month:String?=null,var status: String?=null) :ResponseClass()
+    class SchemeClass(var id:String?=null,var schemeName: String?=null,var disability:String?=null ,var panchayath : String?=null,var schemeImg: String?=null,var amount : String?=null,var type:String?=null , var description :String?=null,var month:String?=null,var status: String?=null,var userId:String?=null) :ResponseClass()
 
     class UserResponse(var status:Boolean = false,var message:String?=null,var user: Person?=null)
 

@@ -13,14 +13,17 @@ import com.mainproject.mdas.model.base.adaptor.ViewPagerAdapter
 
 
 
+var label =""
 
 class CommonSchemesFragment : BaseFragments<FragmentCommonSchemesBinding>(FragmentCommonSchemesBinding::inflate) {
-    private val schemeArray = arrayOf("Approve","Pending","Reject")
+    private val schemeArray = arrayOf("Approve","Progress","Reject")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"commonScheme")
+        val arg = arguments?.getString("child")
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,"common")
         adapter.item = schemeArray
+        label = arg!!
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabView, binding.viewPager) { tab, position ->

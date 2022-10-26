@@ -33,6 +33,8 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
 
             R.layout.item_scheme_view -> RecyclerViewViewHolder.SchemeViewHolder(
                 ItemSchemeViewBinding.inflate(LayoutInflater.from(parent.context),parent,false),context)
+            R.layout.item_user_scheme_view -> RecyclerViewViewHolder.SchemeUserViewHolder(
+                ItemUserSchemeViewBinding.inflate(LayoutInflater.from(parent.context),parent,false),context)
             else -> {throw IllegalArgumentException("view layout not found")}
         }
     }
@@ -46,6 +48,7 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
             is RecyclerViewViewHolder.HospitalViewHolder -> holder.binding(item[position] as ResponseClass.Hospital)
             is RecyclerViewViewHolder.HomeHospitalViewHolder -> holder.binding(item[position] as ResponseClass.Hospital)
             is RecyclerViewViewHolder.SchemeViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)
+            is RecyclerViewViewHolder.SchemeUserViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)
         }
     }
 
@@ -62,7 +65,13 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
                     R.layout.item_home_hospital_view
                 }
             }
-            is ResponseClass.SchemeClass -> R.layout.item_scheme_view
+            is ResponseClass.SchemeClass ->{
+                if(label == "userHome"){
+                    R.layout.item_user_scheme_view
+                }else{
+                    R.layout.item_scheme_view
+                }
+            }
             else -> {
                 throw IllegalArgumentException("Invalid view")
             }

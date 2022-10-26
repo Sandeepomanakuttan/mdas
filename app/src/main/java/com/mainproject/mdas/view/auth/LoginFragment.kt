@@ -24,16 +24,17 @@ import com.mainproject.mdas.HomeFragment
 import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentLoginBinding
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
+import com.mainproject.mdas.progress
 import com.mainproject.mdas.utils.preference
 
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding:FragmentLoginBinding
-    lateinit var viewModel:AuthViewModel
+    private lateinit var binding: FragmentLoginBinding
+    lateinit var viewModel: AuthViewModel
     private val startTime = (30 * 1000).toLong()
     private val interval = (1 * 1000).toLong()
-    var verificationId: String?=null
+    var verificationId: String? = null
 
     private var countDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(layoutInflater,container,false)
+        binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }
@@ -53,43 +54,48 @@ class LoginFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel= ViewModelProvider(this)[AuthViewModel()::class.java]
-        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(HomeFragment().sharedPrefFile,
-            Context.MODE_PRIVATE)
+        viewModel = ViewModelProvider(this)[AuthViewModel()::class.java]
 
 
-        AuthViewModel.userList.observe(viewLifecycleOwner){
-            binding.progress.isVisible=false
+        AuthViewModel.userList.observe(viewLifecycleOwner) {
+            binding.progress.isVisible = false
             if (it != null) {
                 if (it.status) {
-                    val bundle = bundleOf()
-                    if(it.message=="Success") {
+                    progress.isVisible = false
+                    if (it.message == "Success") {
                         if (it.user?.type == "Admin") {
-                            bundle.putString("user","Admin")
-                            bundle.putString("phone",it.user?.phone)
-                            findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
-                        }else{
-                            if (it.user?.status=="apply"){
-                                Toast.makeText(requireContext(), "Validation Progress..\nplease Wait...few Hours", Toast.LENGTH_SHORT).show()
-                            }else{
-                                bundle.putString("user","User")
-                                bundle.putString("phone",it.user?.phone)
-                                bundle.putString("disability",it.user?.disability)
+                            preference(requireContext(), "7907492539", "Admin")
 
-                                it.user?.phone?.let {phone ->
-                                    preference(requireContext(),phone, userType = it.user?.type!!,it.user?.disability)
+                            findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
+                        } else {
+                            if (it.user?.status == "apply") {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Validation Progress..\nplease Wait...few Hours",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+
+                                it.user?.phone?.let { phone ->
+                                    preference(
+                                        requireContext(),
+                                        phone,
+                                        userType = it.user?.type!!,
+                                        it.user?.disability
+                                    )
 
                                 }
 
 
-                                    findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
+                                findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
                             }
                         }
-                    }else{
-                        Toast.makeText(requireContext(), "User doesn't exits", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "User doesn't exits", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                }else{
-                    Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -113,23 +119,23 @@ class LoginFragment : Fragment() {
 
                     binding.progress.isVisible = true
 
-                    viewModel.s=requireActivity()
+                    viewModel.s = requireActivity()
 
                     viewModel.sendVerificationCode(binding.phoneNumber.text.toString())
 
                     viewModel.otps?.observe(viewLifecycleOwner) {
                         binding.progress.isVisible = false
                         binding.otpLayout.isVisible = true
-                        countDownTimer =MyCountDownTimer(startTime, interval)
-                        binding.btnSubmit.text="LOGIN"
+                        countDownTimer = MyCountDownTimer(startTime, interval)
+                        binding.btnSubmit.text = "LOGIN"
                         binding.resend.isVisible = true
                         verificationId = it.toString()
                         setupOtpInput()
                         timerControl()
 
-                   }
+                    }
                 }
-            }else{
+            } else {
                 otpVerification()
             }
 
@@ -253,7 +259,9 @@ class LoginFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             return
-        }else{
+        } else {
+            progress.isVisible = true
+
             val code: String = (binding.code1.text.toString()
                     + binding.code2.text.toString() +
                     binding.code3.text.toString() +
@@ -266,25 +274,23 @@ class LoginFragment : Fragment() {
                 )
             }
             if (phoneAuthcredential != null) {
-                FirebaseAuth.getInstance().signInWithCredential(phoneAuthcredential).addOnCompleteListener {
+                FirebaseAuth.getInstance().signInWithCredential(phoneAuthcredential)
+                    .addOnCompleteListener {
 
-                    if (it.isSuccessful){
+                        if (it.isSuccessful) {
 
-                       val id = FirebaseAuth.getInstance().currentUser.toString()
-                        viewModel.checkUser(binding.phoneNumber.text.toString(),id)
-                        Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
+                            val id = FirebaseAuth.getInstance().currentUser.toString()
+                            viewModel.checkUser(binding.phoneNumber.text.toString(), id)
 
-                    }else{
+                        } else {
 
-                        Toast.makeText(requireContext(), it.exception.toString(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Invalid Otp...", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
-                }
             }
 
         }
-
-
-
 
 
     }

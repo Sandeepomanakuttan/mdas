@@ -5,56 +5,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.mainproject.mdas.R
+import com.mainproject.mdas.databinding.FragmentPendingSchemeBinding
+import com.mainproject.mdas.model.base.BaseFragments
+import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
+import com.mainproject.mdas.utils.RecyclerViewAdaptor
+import com.mainproject.mdas.utils.getPreference
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class PendingSchemeFragment : BaseFragments<FragmentPendingSchemeBinding>(FragmentPendingSchemeBinding::inflate) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PendingSchemeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class PendingSchemeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var viewModel: AdminViewModel
+    lateinit var recyclerViewAdaptor: RecyclerViewAdaptor
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        viewModel=ViewModelProvider(this)[AdminViewModel::class.java]
+        recyclerViewAdaptor = RecyclerViewAdaptor(requireContext())
+        val(user,type) = getPreference(requireContext())
+
+        if (type!="Admin")
+        viewModel.getAgreeScheme(user.toString(),"apply")
+        else
+            viewModel.getAgreeScheme(label,"apply")
+
+        observers()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pending_scheme, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PendingSchemeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PendingSchemeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun observers() {
+        viewModel.agreeSchemeResponse.observe(viewLifecycleOwner){
+            if (it.status){
+                if (it.scheme.isNotEmpty()){
+                    binding.recyclerView.isVisible = true
+                    binding.empty.isVisible = false
+                    binding.recyclerView.apply {
+                        recyclerViewAdaptor.item = it.scheme
+                        adapter = recyclerViewAdaptor
+                        setHasFixedSize(true)
+                    }
+                }else{
+                    binding.recyclerView.isVisible = false
+                    binding.empty.isVisible = true
                 }
             }
+        }
     }
 }
