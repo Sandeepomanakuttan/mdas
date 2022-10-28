@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.mainproject.mdas.databinding.FragmentHomeBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.response.ResponseClass
@@ -23,6 +26,8 @@ private lateinit var recyclerView: RecyclerViewAdaptor
 
     var userId:String?=null
     var desable:String?=null
+    var userName:String?=null
+    var image:String?=null
     lateinit var schemeList:List<ResponseClass.SchemeClass>
     lateinit var List:ArrayList<ResponseClass.SchemeClass>
     lateinit var agreeSchemeList:List<ResponseClass.SchemeClass>
@@ -33,11 +38,11 @@ private lateinit var recyclerView: RecyclerViewAdaptor
         schemeList = arrayListOf()
         agreeSchemeList = arrayListOf()
         List = arrayListOf()
+
     val (userName,type,disable) = getPreference(requireContext())
 
         if (userName != null ){
             viewModel.getDetails(userName)
-            Toast.makeText(requireContext(), userName.toString(), Toast.LENGTH_SHORT).show()
         }
 
 
@@ -56,12 +61,17 @@ private lateinit var recyclerView: RecyclerViewAdaptor
         }
 
 
+        val data = FirebaseAuth.getInstance().currentUser
+
+        Log.e("datassss",data.toString())
+
 
 
         observers()
 
 
         binding.logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
             clearPreference(requireContext())
             requireActivity().finish()
         }
@@ -71,13 +81,19 @@ private lateinit var recyclerView: RecyclerViewAdaptor
 
     private fun observers() {
 
+        val (user,type) = getPreference(requireContext())
+
+
         viewModel.agreeSchemeResponse.observe(viewLifecycleOwner){
             if (it.status){
-                if (it.scheme.isNotEmpty()){
-                    agreeSchemeList = it.scheme
-                    progress.isVisible = false
-                    viewModel.getUserScheme(desable.toString())
-                }
+                    if(type !="Admin") {
+                        agreeSchemeList = it.scheme
+                        progress.isVisible = false
+                        viewModel.getUserScheme(desable.toString())
+                    }else{
+                        setScheme(it.scheme)
+                    }
+
             }
         }
 
@@ -103,6 +119,8 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                     progress.isVisible = true
                     userId = it.person[0].phone
                     desable = it.person[0].disability
+                    userName = it.person[0].personName
+                    image = it.person[0].img
                     viewModel.getHospital(it.person[0].disability.toString())
                     viewModel.agreeScheme(it.person[0].phone.toString())
                 }else{
@@ -137,12 +155,23 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                     adapter = recyclerViewAdaptor
                     setHasFixedSize(true)
                 }
+                itemClickListener(recyclerViewAdaptor)
+
+            }else{
+                binding.recyclerViewScheme.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    recyclerViewAdaptor.item = scheme
+                    recyclerViewAdaptor.label = "adminHome"
+                    adapter = recyclerViewAdaptor
+                    setHasFixedSize(true)
+                }
+                itemClickListener(recyclerViewAdaptor)
+
             }
-            itemClickListener(recyclerViewAdaptor)
-        }else{
-            binding.empty.isVisible = true
-            binding.recyclerViewScheme.isVisible = false
-        }
+        } else{
+        binding.empty.isVisible = true
+        binding.recyclerViewScheme.isVisible = false
+    }
     }
 
     private fun setHospitalView(hospital: List<ResponseClass.Hospital>) {
@@ -171,20 +200,59 @@ private lateinit var recyclerView: RecyclerViewAdaptor
             val (user,type,disability) =  getPreference(requireContext())
             when (item) {
                 is ResponseClass.SchemeClass -> {
-                    progress.isVisible = true
-                    item.status = "apply"
-                    agreeSchemeRef.child(user!!).child(item.id!!).setValue(item).addOnCompleteListener {
-                        if (it.isSuccessful) {
 
-                            progress.isVisible = false
-                            Toast.makeText(
-                                context,
-                                "Successfully Applied",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                    when(view.id){
+                        R.id.button2 ->{
+                            progress.isVisible = true
+                            item.status = "apply"
+                            item.uImg =image
+                            item.Name =userName
+                            agreeSchemeRef.child(user!!).child(item.id!!).setValue(item).addOnCompleteListener {
+                                if (it.isSuccessful) {
+
+                                    progress.isVisible = false
+                                    Toast.makeText(
+                                        context,
+                                        "Successfully Applied",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+                            }
+                        }
+
+                        R.id.view ->{
+                            Toast.makeText(requireContext(), "callll", Toast.LENGTH_SHORT).show()
+                            val bundle = bundleOf()
+                            bundle.putString("child",item.userId)
+                            bundle.putBoolean("page",true)
+                            findNavController().navigate(R.id.action_homeFragment_to_viewPersonDetailsFragment,bundle)
+                        }
+
+                        R.id.schemes ->{
 
                         }
+
+                        R.id.btnApprove ->{
+                            progress.isVisible = true
+                            item.status = "approve"
+                            item.uImg =item.uImg
+                            item.Name =item.Name
+                            agreeSchemeRef.child(item.userId!!).child(item.id!!).setValue(item).addOnCompleteListener {
+                                if (it.isSuccessful) {
+
+                                    progress.isVisible = false
+                                    Toast.makeText(
+                                        context,
+                                        "Approved",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+                            }                        }
                     }
+
+
                 }
                 else -> {}
             }

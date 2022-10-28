@@ -1,6 +1,7 @@
 package com.mainproject.mdas.model.viewmodel.admin
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -190,17 +191,34 @@ companion object {
 
     fun getAgreeScheme() {
         val response = ResponseClass.SchemeResponse()
-
-        agreeSchemeRef.orderByChild("status").equalTo("apply").addValueEventListener(object : ValueEventListener{
+        agreeSchemeRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                Log.e("calledeee","inner")
                 val list = arrayListOf<ResponseClass.SchemeClass>()
-                for (singleSnap in snapshot.children){
-                    val data = singleSnap.getValue(ResponseClass.SchemeClass::class.java)
-                    list.add(data!!)
+                if (snapshot.exists()) {
+                    for (singleSnap in snapshot.children) {
+                        for (s in singleSnap.children){
+                            val data = s.getValue(ResponseClass.SchemeClass::class.java)
+                            data!!.userId = singleSnap.key
+                            Log.e("calledeee", data.userId.toString())
+                            if (data.status =="apply")
+                            list.add(data)
+
+                        }
+
+
+//                        Log.e("calledeee",data?.id.toString())
+//
+//
+                    }
+                    response.scheme = list
+                    response.status = true
+                    agreeSchemeResponse.value = response
+                }else{
+                    response.scheme = emptyList()
+                    response.status = true
+                    agreeSchemeResponse.value = response
                 }
-                response.scheme=list
-                response.status = true
-                agreeSchemeResponse.value=response
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -320,12 +338,14 @@ companion object {
         agreeSchemeRef.child(user).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = arrayListOf<ResponseClass.SchemeClass>()
+                Log.e("hello", "hrll")
+
                 if (snapshot.exists()){
                     for (i in snapshot.children){
                         val data = i.getValue(ResponseClass.SchemeClass::class.java)
+                        data?.userId = i.key
+                        Log.e("keyyyyyy",data?.userId.toString())
                         list.add(data!!)
-                        Log.e("hello", data.description.toString())
-
                     }
                     response.scheme=list
                     response.status = true

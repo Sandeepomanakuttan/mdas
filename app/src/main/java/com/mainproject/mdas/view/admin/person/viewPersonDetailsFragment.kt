@@ -29,8 +29,6 @@ class viewPersonDetailsFragment :
 
         if (type == "Admin") {
             binding.constraintLayout4.isVisible = arguments?.getBoolean("page") != true
-
-
             arguments?.getString("child")?.let { viewModel.getUniqPerson(it) }
             progress.isVisible = true
         }else{
@@ -45,7 +43,7 @@ class viewPersonDetailsFragment :
             val layoutParams =
                 (binding.scrollable.layoutParams as? ViewGroup.MarginLayoutParams)
             layoutParams?.setMargins(
-                0, 700, 0, 0
+                0, 500, 0, 0
             )
 
             binding.scrollable.layoutParams = layoutParams

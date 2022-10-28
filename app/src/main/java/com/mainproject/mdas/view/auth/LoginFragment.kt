@@ -1,8 +1,6 @@
 package com.mainproject.mdas.view.auth
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -13,14 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
-import com.mainproject.mdas.HomeFragment
 import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentLoginBinding
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
@@ -64,7 +60,9 @@ class LoginFragment : Fragment() {
                     progress.isVisible = false
                     if (it.message == "Success") {
                         if (it.user?.type == "Admin") {
-                            preference(requireContext(), "7907492539", "Admin")
+                          //  it.user!!.phone?.let { it1 -> preference(requireContext(), it1,it.user?.type!!) }
+
+                            preference(requireContext(),"7907492539","Admin")
 
                             findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
                         } else {

@@ -35,6 +35,9 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
                 ItemSchemeViewBinding.inflate(LayoutInflater.from(parent.context),parent,false),context)
             R.layout.item_user_scheme_view -> RecyclerViewViewHolder.SchemeUserViewHolder(
                 ItemUserSchemeViewBinding.inflate(LayoutInflater.from(parent.context),parent,false),context)
+
+            R.layout.home_scheme -> RecyclerViewViewHolder.SchemeUserApplyViewHolder(
+                HomeSchemeBinding.inflate(LayoutInflater.from(parent.context),parent,false),context)
             else -> {throw IllegalArgumentException("view layout not found")}
         }
     }
@@ -49,6 +52,7 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
             is RecyclerViewViewHolder.HomeHospitalViewHolder -> holder.binding(item[position] as ResponseClass.Hospital)
             is RecyclerViewViewHolder.SchemeViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)
             is RecyclerViewViewHolder.SchemeUserViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)
+            is RecyclerViewViewHolder.SchemeUserApplyViewHolder -> holder.binding(item[position] as ResponseClass.SchemeClass)
         }
     }
 
@@ -66,10 +70,16 @@ class RecyclerViewAdaptor(val context: Context) : RecyclerView.Adapter<RecyclerV
                 }
             }
             is ResponseClass.SchemeClass ->{
-                if(label == "userHome"){
-                    R.layout.item_user_scheme_view
-                }else{
-                    R.layout.item_scheme_view
+                when (label) {
+                    "userHome" -> {
+                        R.layout.item_user_scheme_view
+                    }
+                    "adminHome" -> {
+                        R.layout.home_scheme
+                    }
+                    else -> {
+                        R.layout.item_scheme_view
+                    }
                 }
             }
             else -> {

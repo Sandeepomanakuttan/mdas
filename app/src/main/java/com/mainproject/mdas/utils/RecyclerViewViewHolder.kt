@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.mainproject.mdas.R
+import com.mainproject.mdas.databinding.HomeSchemeBinding
 import com.mainproject.mdas.databinding.HospitalViewBinding
 import com.mainproject.mdas.databinding.ItemHomeHospitalViewBinding
 import com.mainproject.mdas.databinding.ItemSchemeViewBinding
@@ -114,6 +115,32 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
             binding.month.text = monthName[schemeClass.month?.toInt()!!]
 
             binding.button2.setOnClickListener {
+                itemClickListener?.invoke(it,schemeClass,adapterPosition)
+            }
+
+        }
+
+    }
+
+    class SchemeUserApplyViewHolder(private val binding: HomeSchemeBinding ,val context: Context) : RecyclerViewViewHolder(binding) {
+        fun binding(schemeClass: ResponseClass.SchemeClass) {
+
+            binding.name.text = schemeClass.Name
+            Glide.with(context).load(schemeClass.schemeImg).into(binding.img)
+            binding.disability.text = schemeClass.disability
+            binding.houseName.text = schemeClass.amount
+
+            binding.view.setOnClickListener {
+                itemClickListener?.invoke(it,schemeClass,adapterPosition)
+            }
+
+            binding.btnApprove.setOnClickListener {
+                itemClickListener?.invoke(it,schemeClass,adapterPosition)
+            }
+
+            binding.schemes.setOnClickListener {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+
                 itemClickListener?.invoke(it,schemeClass,adapterPosition)
             }
 

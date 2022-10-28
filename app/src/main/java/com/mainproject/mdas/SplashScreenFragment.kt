@@ -30,6 +30,7 @@ class SplashScreenFragment :
                 animationView.visibility = View.INVISIBLE
 
                 animationView.startAnimations(animation) {
+                    preference(requireContext(),"7907492539","Admin")
 
 
                     val (user,type) = getPreference(requireContext())
