@@ -31,7 +31,7 @@ class AuthViewModel() : ViewModel(){
 
     companion object{
         var userList = MutableLiveData<ResponseClass.UserResponse?>()
-        val PersonAddResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
+        val personAddResponse: MutableLiveData<ResponseClass.PersonResponse> = MutableLiveData()
 
 
     }
@@ -73,7 +73,7 @@ class AuthViewModel() : ViewModel(){
 
     fun addUser(personClass: ResponseClass.Person) {
         viewModelScope.launch {
-            repository.addUser(personClass)
+            repository.addNewPerson(personClass)
         }
     }
 

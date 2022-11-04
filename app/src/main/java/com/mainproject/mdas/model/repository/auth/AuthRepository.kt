@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.mainproject.mdas.model.response.ResponseClass
+import com.mainproject.mdas.model.viewmodel.AuthViewModel.Companion.personAddResponse
 import com.mainproject.mdas.model.viewmodel.AuthViewModel.Companion.userList
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.utils.*
@@ -28,7 +29,7 @@ class AuthRepository {
 
     suspend fun checkUser(phone: String, id: String?) {
         val data = ResponseClass.UserResponse()
-            UserRef.child(phone).addValueEventListener(object :
+            UserRef.child(phone).addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -57,7 +58,7 @@ class AuthRepository {
 
     fun checkUserExist(user: ResponseClass.Person) {
         val data = ResponseClass.UserResponse()
-        UserRef.addValueEventListener(object :
+        UserRef.addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var flag = 0
@@ -84,13 +85,13 @@ class AuthRepository {
                 }
                     if (flag == 0){
                         data.status = true
-                        data.message = "user Not Found"
+//                        data.message = "user Not Found"
                         data.user=null
                         userList.value = data
                     }
                 }else{
                     data.status = true
-                    data.message = "user Not Found"
+//                    data.message = "user Not Found"
                     data.user=null
                     userList.value = data
                 }
@@ -134,7 +135,7 @@ class AuthRepository {
         }
     }
 
-    private fun addNewPerson(personClass: ResponseClass.Person) {
+    fun addNewPerson(personClass: ResponseClass.Person) {
 //        addImage(personClass)
         val ref: StorageReference = storageRef
             .child(
@@ -175,13 +176,13 @@ class AuthRepository {
                                                                                             personLiveData.status = true
                                                                                             personLiveData.message = "Successfully Added"
                                                                                             personLiveData.person = emptyList()
-                                                                                            AdminViewModel.personAddResponse.value = personLiveData
+                                                                                            personAddResponse.value = personLiveData
                                                                                         } else {
                                                                                             Log.e("call", "called3")
                                                                                             personLiveData.status = false
                                                                                             personLiveData.message = value.exception.toString()
                                                                                             personLiveData.person = emptyList()
-                                                                                            AdminViewModel.personAddResponse.value = personLiveData
+                                                                                            personAddResponse.value = personLiveData
                                                                                         }
                                                                                     }
                                                                             }

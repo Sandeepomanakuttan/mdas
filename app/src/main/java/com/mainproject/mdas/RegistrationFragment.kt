@@ -9,6 +9,7 @@ import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ArrayAdapter
@@ -23,6 +24,7 @@ import com.mainproject.mdas.databinding.FragmentRegistrationBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
+import com.mainproject.mdas.model.viewmodel.AuthViewModel.Companion.personAddResponse
 import com.mainproject.mdas.utils.disableArrays
 import com.mainproject.mdas.utils.panchayatArray
 
@@ -30,6 +32,7 @@ import com.mainproject.mdas.utils.panchayatArray
 class RegistrationFragment :
     BaseFragments<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate) {
 
+    private var flag = true
     private var imgProfile: Uri? = null
     private var imgGuardianAdhaar: Uri? = null
     private var imgDisability: Uri? = null
@@ -143,7 +146,6 @@ class RegistrationFragment :
                     progress.isVisible = true
                     viewModel.userCheck(personClass)
 
-
                 }
             }
 
@@ -171,24 +173,27 @@ class RegistrationFragment :
 
         }
 
-        AuthViewModel.userList.observe(viewLifecycleOwner){
-            progress.isVisible = false
-            if (it!!.status){
-                viewModel.s = requireActivity()
-                viewModel.sendVerificationCode(binding.phone.text.toString())
-                progress.isVisible = true
 
-            }else{
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            AuthViewModel.userList.observe(viewLifecycleOwner) {
+                Log.e("callsss", "called2")
+                progress.isVisible = false
+                if (it!!.status) {
+                    viewModel.s = requireActivity()
+                    viewModel.sendVerificationCode(binding.phone.text.toString())
+                    progress.isVisible = true
+
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
             }
-        }
 
 
-        AuthViewModel.PersonAddResponse.observe(viewLifecycleOwner) {
+
+        personAddResponse.observe(viewLifecycleOwner) {
             progress.isVisible = false
             if (it.status) {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
+                     findNavController().popBackStack()
                 }
              else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -333,8 +338,8 @@ class RegistrationFragment :
                 FirebaseAuth.getInstance().signInWithCredential(phoneAuthcredential)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val id = FirebaseAuth.getInstance().currentUser.toString()
-                            progress.isVisible = false
+//                            progress.isVisible = false
+                            flag = false
                             viewModel.addUser(personClass)
 
                         } else {
