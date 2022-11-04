@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.mainproject.mdas.RegistrationFragment
+import com.mainproject.mdas.view.admin.ProfileFragment
 import com.mainproject.mdas.view.admin.comman.ApproveSchemeFragment
 import com.mainproject.mdas.view.admin.comman.PendingSchemeFragment
 import com.mainproject.mdas.view.admin.comman.RejectSchemeFragment
@@ -22,12 +24,11 @@ import com.mainproject.mdas.view.admin.trainee.TraineeViewFragment
 
 
 
-public class ViewPagerAdapter(
+class ViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     val type: String
-) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     var item = emptyArray<String>()
     @SuppressLint("NotifyDataSetChanged")
@@ -59,12 +60,11 @@ public class ViewPagerAdapter(
                 }
             }
             "UserHospital" -> frag =HospitalViewFragment()
-            "my" -> frag = viewPersonDetailsFragment()
+            "my" -> frag = if(position==0) viewPersonDetailsFragment() else ProfileFragment()
             "person" -> {
                 frag = when (position) {
                     0 -> PersonViewFragment()
                     else -> PersonAddFragment()
-
                 }
             }
 

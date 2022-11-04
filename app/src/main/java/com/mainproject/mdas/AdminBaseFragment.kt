@@ -32,9 +32,4 @@ class AdminBaseFragment :  Fragment(){
         navView?.setupWithNavController(navHostFragment.navController)
     }
 
-
-    private fun onButtomNavSetUp() {
-
-    }
-
 }

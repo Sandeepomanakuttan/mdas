@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="@dimen/_4sdp"
-            android:text="@string/house_name"
+            android:text="@string/amount"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toEndOf="@+id/img"

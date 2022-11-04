@@ -278,9 +278,9 @@ class AdminHomeRepository {
         }
     }
 
-    private fun addNewPerson(person: ResponseClass.Person) {
+    fun addNewPerson(person: ResponseClass.Person) {
 
-        person.id = traineeRef.push().key
+        person.id = personRef.push().key
         person.personName?.let { _ ->
 
             personRef.child(person.id.toString()).setValue(person)

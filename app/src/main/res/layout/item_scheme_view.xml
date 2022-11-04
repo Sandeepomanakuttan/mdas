@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/schemeImg"
             android:layout_width="@dimen/_75sdp"
@@ -27,7 +28,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
@@ -39,19 +39,19 @@
             android:id="@+id/disability"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="@+id/schemeName"
             app:layout_constraintStart_toStartOf="@+id/schemeName"
-            app:layout_constraintTop_toBottomOf="@+id/schemeName"
-            android:layout_marginTop="@dimen/_4sdp"/>
+            app:layout_constraintTop_toBottomOf="@+id/schemeName" />
 
         <TextView
             android:id="@+id/desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:fontFamily="@font/lato"
             android:maxLines="4"
-            android:layout_marginTop="@dimen/_4sdp"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="@+id/schemeName"
@@ -62,15 +62,26 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
-            android:textSize="@dimen/_12ssp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:text="2100"
             android:layout_marginBottom="@dimen/_8sdp"
+            android:fontFamily="@font/lato"
             android:gravity="center"
+            android:text="2100"
+            android:textSize="@dimen/_12ssp"
+            app:drawableStartCompat="@drawable/ic_baseline_currency_rupee_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/banner"
-            app:drawableStartCompat="@drawable/ic_baseline_currency_rupee_24" />
+            app:layout_constraintEnd_toStartOf="@+id/banner" />
+
+        <TextView
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:text="@string/end_date_s"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/price"
+            app:layout_constraintStart_toStartOf="@+id/disability"
+            app:layout_constraintTop_toTopOf="@+id/price" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/banner"
@@ -86,8 +97,8 @@
                 android:fontFamily="@font/lato"
                 android:rotation="90"
                 android:text="July"
-                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

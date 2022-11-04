@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.mainproject.mdas.databinding.FragmentApproveSchemeBinding
 import com.mainproject.mdas.databinding.FragmentAvailableTraineeBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
@@ -13,7 +14,7 @@ import com.mainproject.mdas.utils.agreeSchemeRef
 import com.mainproject.mdas.utils.getPreference
 
 
-class ApproveSchemeFragment : BaseFragments<FragmentAvailableTraineeBinding>(FragmentAvailableTraineeBinding::inflate) {
+class ApproveSchemeFragment : BaseFragments<FragmentApproveSchemeBinding>(FragmentApproveSchemeBinding::inflate) {
 
     lateinit var viewModel: AdminViewModel
     lateinit var recyclerViewAdaptor: RecyclerViewAdaptor

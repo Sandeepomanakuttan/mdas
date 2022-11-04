@@ -53,5 +53,9 @@
     <string name="experience">Experience</string>
     <string name="enter_hospital_details">Enter Hospital Details</string>
     <string name="apply">Apply</string>
+    <string name="scheme_details">Scheme Details</string>
+    <string name="believe_you_can_and_you_re_halfway_there">Believe you can and you\'re halfway there</string>
+    <string name="end_date_s">End Date :<font color="#007DFE">%s</font></string>
+    <string name="eranakulam">Eranakulam</string>
 
 </resources>

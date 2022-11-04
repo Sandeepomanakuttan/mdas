@@ -1,23 +1,19 @@
 package com.mainproject.mdas.utils
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.mainproject.mdas.R
-import com.mainproject.mdas.databinding.HomeSchemeBinding
-import com.mainproject.mdas.databinding.HospitalViewBinding
-import com.mainproject.mdas.databinding.ItemHomeHospitalViewBinding
-import com.mainproject.mdas.databinding.ItemSchemeViewBinding
-import com.mainproject.mdas.databinding.ItemUserSchemeViewBinding
-import com.mainproject.mdas.databinding.PersonViewBinding
-import com.mainproject.mdas.databinding.TraineeViewBinding
+import com.mainproject.mdas.databinding.*
 import com.mainproject.mdas.model.response.ResponseClass
-import com.mainproject.mdas.progress
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolder(binding.root) {
 
@@ -27,9 +23,6 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
 
         fun binding(item: ResponseClass.TraineeClass, label: String){
             binding.connect.isVisible = label == "user" && item.status == "Available"
-
-            Toast.makeText(context, item.status.toString(), Toast.LENGTH_SHORT).show()
-
             binding.TraineeName.text=item.traineeName
             binding.experience.text = String.format(context.resources.getString(R.string.trainee_exp),item.field,item.experience)
             Glide.with(context).load(item.traineeImg).into(binding.imgTrainee)
@@ -91,14 +84,20 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
     }
 
     class SchemeViewHolder(private val binding: ItemSchemeViewBinding , val context: Context) : RecyclerViewViewHolder(binding) {
+        @RequiresApi(Build.VERSION_CODES.O)
         fun binding(schemeClass: ResponseClass.SchemeClass) {
+            val outputFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
 
             binding.schemeName.text = schemeClass.schemeName
             Glide.with(context).load(schemeClass.schemeImg).into(binding.schemeImg)
             binding.desc.text= schemeClass.description
             binding.disability.text = schemeClass.disability
             binding.price.text = schemeClass.amount
-            binding.month.text = monthName[schemeClass.month?.toInt()!!]
+            val startDate: LocalDate = LocalDate.parse(schemeClass.month)
+            val newDate: LocalDate = startDate.plusDays(10)
+            binding.end.text =String.format(context.resources.getString(R.string.end_date_s),newDate.format(outputFormatter))
+           // binding.month.text = monthName[schemeClass.month?.toInt()!!]
 
         }
 
@@ -139,7 +138,6 @@ sealed class RecyclerViewViewHolder(binding: ViewBinding):RecyclerView.ViewHolde
             }
 
             binding.schemes.setOnClickListener {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
 
                 itemClickListener?.invoke(it,schemeClass,adapterPosition)
             }

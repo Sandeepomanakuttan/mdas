@@ -54,7 +54,6 @@ class AvailableTraineeFragment :
     }
 
     private fun setTrainee(trainee: List<ResponseClass.TraineeClass>) {
-        Toast.makeText(requireContext(), "called", Toast.LENGTH_SHORT).show()
         if (trainee.isNotEmpty()) {
             binding.recyclerView.isVisible = true
             binding.empty.isVisible = false

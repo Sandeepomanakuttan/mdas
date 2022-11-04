@@ -21,4 +21,9 @@
         <item name="android:windowContentTransitions">true</item>
 
 </style>
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">@dimen/_17sdp</item>
+    </style>
+
 </resources>

@@ -39,6 +39,40 @@ class viewPersonDetailsFragment :
             }
         }
 
+        binding.imgDisability.setOnClickListener {
+            binding.touchLayout.isVisible = true
+            binding.mainLayout.isVisible = false
+            Glide.with(requireActivity()).load(person!!.imgDisability)
+                .into(binding.touchView)
+        }
+
+        binding.imgGuardian.setOnClickListener {
+            binding.touchLayout.isVisible = true
+            binding.mainLayout.isVisible = false
+            Glide.with(requireActivity()).load(person!!.imgGuardianAdhar)
+                .into(binding.touchView)
+        }
+
+
+        binding.imgUid.setOnClickListener {
+            binding.touchLayout.isVisible = true
+            binding.mainLayout.isVisible = false
+            Glide.with(requireActivity()).load(person!!.imgAdhar)
+                .into(binding.touchView)
+        }
+
+        binding.profileImage.setOnClickListener {
+            binding.touchLayout.isVisible = true
+            binding.mainLayout.isVisible = false
+            Glide.with(requireActivity()).load(person!!.img)
+                .into(binding.touchView)
+        }
+
+
+        binding.close.setOnClickListener {
+            binding.touchLayout.isVisible = false
+            binding.mainLayout.isVisible = true
+        }
         if (!binding.constraintLayout4.isVisible) {
             val layoutParams =
                 (binding.scrollable.layoutParams as? ViewGroup.MarginLayoutParams)

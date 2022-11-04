@@ -1,6 +1,7 @@
 package com.mainproject.mdas.model.repository.auth
 
 import android.util.Log
+import android.widget.Toast
 import androidx.core.net.toUri
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +26,7 @@ class AuthRepository {
 
 
 
-    suspend fun checkUser(phone: String, id: String) {
+    suspend fun checkUser(phone: String, id: String?) {
         val data = ResponseClass.UserResponse()
             UserRef.child(phone).addValueEventListener(object :
             ValueEventListener {
@@ -53,18 +54,71 @@ class AuthRepository {
         })
     }
 
+
+    fun checkUserExist(user: ResponseClass.Person) {
+        val data = ResponseClass.UserResponse()
+        UserRef.addValueEventListener(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var flag = 0
+                if (snapshot.exists()) {
+
+                    for (i in snapshot.children){
+                        flag =0
+                    val userData = i.getValue(ResponseClass.Person::class.java)!!
+                    if (userData.phone == user.phone) {
+                        flag = 1
+                        data.status = false
+                        data.message = "Phone Number Already Exist"
+                        data.user = null
+                        userList.value = data
+                        break
+                    } else if (userData.adhar == user.adhar) {
+                        flag = 1
+                        data.status = false
+                        data.message = "Aadhaar Already Exist"
+                        data.user = userData
+                        userList.value = data
+                        break
+                    }
+                }
+                    if (flag == 0){
+                        data.status = true
+                        data.message = "user Not Found"
+                        data.user=null
+                        userList.value = data
+                    }
+                }else{
+                    data.status = true
+                    data.message = "user Not Found"
+                    data.user=null
+                    userList.value = data
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("data","data not exits")
+                data.status = false
+                data.message = "Network Error"
+                userList.value = data
+            }
+        })
+    }
+
+
     fun addUser(personClass: ResponseClass.Person) {
         personClass.phone?.let { it ->
             UserRef.child(it).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val data = snapshot.getValue(ResponseClass.Person()::class.java)
-                        if (data?.phone == personClass.phone) {
+                        if (data?.phone == personClass.phone || data?.adhar == personClass.adhar) {
                             personLiveData.status = true
                             personLiveData.message = "User Already Exist"
                             personLiveData.person = emptyList()
                             AdminViewModel.personAddResponse.value = personLiveData
-                        } else addNewPerson(personClass)
+                        }
+                        else addNewPerson(personClass)
                     } else {
                         addNewPerson(personClass)
                     }

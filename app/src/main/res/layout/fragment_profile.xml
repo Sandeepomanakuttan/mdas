@@ -10,7 +10,7 @@
         android:id="@+id/profileImage"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/domo"
+        android:layout_marginTop="@dimen/_67sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_54sdp"
         android:background="#F1F8FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +82,7 @@
             android:layout_height="@dimen/_48sdp"
             android:layout_marginStart="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_22sdp"
             android:background="@drawable/stoke_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -129,10 +129,11 @@
             style="@style/editLabel"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:drawablePadding="@dimen/_8sdp"
             android:background="@drawable/stoke_person"
+            android:drawablePadding="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_22sdp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
@@ -141,55 +142,36 @@
             style="@style/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mobile Number"
+            android:text="User Name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guardian" />
 
 
         <EditText
-            android:id="@+id/edtPhone"
+            android:id="@+id/edtName"
             style="@style/editLabel"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
+            android:background="@drawable/stoke_person"
+            android:drawablePadding="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_22sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:drawablePadding="@dimen/_8sdp"
-            android:background="@drawable/stoke_person"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-
-        <TextView
-            android:id="@+id/textView6"
-            style="@style/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtPhone" />
-
-
-        <EditText
-            android:id="@+id/edtEmail"
-            style="@style/editLabel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_48sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:drawablePadding="@dimen/_8sdp"
-            android:background="@drawable/stoke_person"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/btn_style"
-            android:background="@drawable/button"
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:text="@string/submit"
             android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/button"
+            android:text="@string/submit"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/edtName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

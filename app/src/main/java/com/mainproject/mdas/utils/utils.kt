@@ -66,3 +66,19 @@ fun getPreference(context: Context): ArrayList<String?> {
 fun clearPreference(context: Context) {
     context.getSharedPreferences("MY_APP", Context.MODE_PRIVATE).edit().clear().apply()
 }
+
+fun onPreference(context: Context, onboard:Boolean) {
+    val preference = context.getSharedPreferences("MY_On", Context.MODE_PRIVATE)
+    val edit = preference.edit()
+    edit.putBoolean("board",onboard)
+    edit.apply()
+}
+
+fun getOnPreference(context: Context): Boolean {
+    val preference = context.getSharedPreferences("MY_On", Context.MODE_PRIVATE)
+    return preference.getBoolean("board",false)
+}
+
+fun onClearPreference(context: Context) {
+    context.getSharedPreferences("MY_On", Context.MODE_PRIVATE).edit().clear().apply()
+}

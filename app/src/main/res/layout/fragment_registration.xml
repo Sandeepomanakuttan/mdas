@@ -83,58 +83,35 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edit_background"
                 android:hint="@string/enter_your_mobile_number"
-                android:inputType="number"
+                android:inputType="phone"
+                android:maxLength="10"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/houseName" />
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/spinner1"
+            <TextView
+                android:id="@+id/district"
                 style="@style/editText"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
+                android:text="@string/eranakulam"
                 android:background="@drawable/edit_background"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/phone">
+            </TextView>
 
-                <Spinner
-                    android:id="@+id/district"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/mainColor"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/district"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlSymmetry" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/spinner2"
+            <TextView
+                android:id="@+id/panchayath"
                 style="@style/editText"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
+                android:text="@string/paingottoor"
                 android:background="@drawable/edit_background"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/spinner1">
-
-                <Spinner
-                    android:id="@+id/panchayath"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/mainColor"
-                    android:inputType="text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.615"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/district"/>
 
             <EditText
                 android:id="@+id/guardian"
@@ -146,7 +123,7 @@
                 android:inputType="text"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+                app:layout_constraintTop_toBottomOf="@+id/panchayath" />
 
             <ImageView
                 android:id="@+id/imgGuardian"
@@ -222,6 +199,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edit_background"
                 android:hint="@string/enter_uid_number"
+                android:maxLength="16"
                 android:inputType="text"
                 app:layout_constraintEnd_toStartOf="@+id/guideline1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"

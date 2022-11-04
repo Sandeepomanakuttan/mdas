@@ -34,6 +34,12 @@ class TraineeAddFragment : BaseFragments<FragmentTraineeAddBinding>(FragmentTrai
                 progress.isVisible = false
                 if (it.status){
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.imgTrainee.setImageURI(null)
+                    binding.etTraineeName.text.clear()
+                    binding.exp.text.clear()
+                    binding.spinnerPachayath.setSelection(0)
+                    binding.spinnerField.setSelection(0)
+
                 }
             }
 

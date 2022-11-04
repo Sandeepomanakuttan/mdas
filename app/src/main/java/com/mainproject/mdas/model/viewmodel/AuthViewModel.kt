@@ -48,7 +48,6 @@ class AuthViewModel() : ViewModel(){
 
 
     fun sendVerificationCode(phoneNumber: String) {
-        Toast.makeText(s, phoneNumber, Toast.LENGTH_SHORT).show()
         val fullnumber = "+91$phoneNumber"
         val options = PhoneAuthOptions.newBuilder(mauth)
             .setPhoneNumber(fullnumber)
@@ -59,9 +58,16 @@ class AuthViewModel() : ViewModel(){
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    fun checkUser(phone: String, id: String) {
+    fun checkUser(phone: String, id: String?) {
         viewModelScope.launch {
-            repository.checkUser(phone, id)
+                repository.checkUser(phone, id)
+
+        }
+    }
+
+    fun userCheck(personClass: ResponseClass.Person){
+        viewModelScope.launch {
+            repository.checkUserExist(personClass)
         }
     }
 

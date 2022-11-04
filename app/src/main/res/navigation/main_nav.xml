@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_adminBaseFragment"
             app:destination="@id/adminBaseFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/onbordingFragment"
@@ -56,6 +59,9 @@
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_adminBaseFragment"
+            app:destination="@id/adminBaseFragment" />
     </fragment>
 
     <fragment

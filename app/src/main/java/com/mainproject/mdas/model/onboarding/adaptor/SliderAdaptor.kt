@@ -40,9 +40,7 @@ class SliderAdaptor(private val context:Context, private val listener:SlideCallB
             start.isVisible = false
 
             button.setOnClickListener {
-                slideImage.startAnimations(animation){
                     listener.itemClick(position)
-                }
                 //RunAnimation(slideImage)
             }
         }else{
@@ -50,9 +48,8 @@ class SliderAdaptor(private val context:Context, private val listener:SlideCallB
             start.isVisible = true
 
             start.setOnClickListener {
-                slideImage.startAnimations(animation) {
                     listener.itemClick(position)
-                }
+
             }
             
         }

@@ -30,7 +30,7 @@ class PersonFragment : BaseFragments<FragmentPersonBinding>(FragmentPersonBindin
                 tab.text = personArray[position]
             }.attach()
         } else {
-            val personArray = arrayOf("My Profile")
+            val personArray = arrayOf("My Profile","Edit Profile")
 
             val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, "my")
             adapter.item = personArray

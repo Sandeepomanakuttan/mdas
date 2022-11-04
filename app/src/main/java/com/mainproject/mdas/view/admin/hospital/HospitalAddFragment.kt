@@ -105,7 +105,7 @@ class HospitalAddFragment :
             progress.isVisible = false
             if (it.status){
                 if (it.message!="Hospital Already Exist"){
-                    Glide.with(requireContext()).load("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngitem.com%2Fmiddle%2FTRxRJxb_empty-profile-picture-icon-hd-png-download%2F&psig=AOvVaw27rmIjpNTrNL60FO6neh2u&ust=1666142630330000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCLCOuo_P6PoCFQAAAAAdAAAAABAJ").into(binding.imgHospital)
+                    binding.imgHospital.setImageURI(null)
                     binding.location.text.clear()
                     binding.address.text.clear()
                     binding.ratingBar.rating=0f

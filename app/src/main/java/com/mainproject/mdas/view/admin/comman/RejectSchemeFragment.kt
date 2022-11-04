@@ -38,7 +38,6 @@ class RejectSchemeFragment : BaseFragments<FragmentRejectSchemeBinding>(Fragment
 
     private fun observers() {
         viewModel.agreeSchemeResponse.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), "callled", Toast.LENGTH_SHORT).show()
             if (it.status){
                 if (it.scheme.isNotEmpty()){
                     binding.recyclerView.isVisible = true

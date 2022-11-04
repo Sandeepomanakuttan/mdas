@@ -21,6 +21,8 @@ import com.mainproject.mdas.R
 import com.mainproject.mdas.databinding.FragmentLoginBinding
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
 import com.mainproject.mdas.progress
+import com.mainproject.mdas.utils.getOnPreference
+import com.mainproject.mdas.utils.onPreference
 import com.mainproject.mdas.utils.preference
 
 
@@ -44,6 +46,8 @@ class LoginFragment : Fragment() {
     ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
 
+        if (!getOnPreference(requireContext()))
+        onPreference(requireContext(),true)
         return binding.root
     }
 
@@ -52,7 +56,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[AuthViewModel()::class.java]
 
-
         AuthViewModel.userList.observe(viewLifecycleOwner) {
             binding.progress.isVisible = false
             if (it != null) {
@@ -60,11 +63,9 @@ class LoginFragment : Fragment() {
                     progress.isVisible = false
                     if (it.message == "Success") {
                         if (it.user?.type == "Admin") {
-                          //  it.user!!.phone?.let { it1 -> preference(requireContext(), it1,it.user?.type!!) }
 
-                            preference(requireContext(),"7907492539","Admin")
-
-                            findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
+                            preference(requireContext(),"9562832325","Admin")
+                                findNavController().navigate(R.id.action_loginFragment_to_adminBaseFragment)
                         } else {
                             if (it.user?.status == "apply") {
                                 Toast.makeText(
@@ -101,6 +102,14 @@ class LoginFragment : Fragment() {
 
         binding.reg.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
+
+        binding.resend.setOnClickListener {
+            binding.progress.isVisible = true
+
+            viewModel.s = requireActivity()
+
+            viewModel.sendVerificationCode(binding.phoneNumber.text.toString())
         }
 
         binding.btnSubmit.setOnClickListener {

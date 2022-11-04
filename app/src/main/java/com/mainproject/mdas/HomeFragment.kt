@@ -19,18 +19,18 @@ import com.mainproject.mdas.utils.*
 
 
 class HomeFragment : BaseFragments<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-private lateinit var recyclerViewAdaptor: RecyclerViewAdaptor
-private lateinit var recyclerView: RecyclerViewAdaptor
- lateinit var viewModel: AdminViewModel
- val sharedPrefFile = "kotlinsharedpreference"
+    private lateinit var recyclerViewAdaptor: RecyclerViewAdaptor
+    private lateinit var recyclerView: RecyclerViewAdaptor
+    lateinit var viewModel: AdminViewModel
+    val sharedPrefFile = "kotlinsharedpreference"
 
-    var userId:String?=null
-    var desable:String?=null
-    var userName:String?=null
-    var image:String?=null
-    lateinit var schemeList:List<ResponseClass.SchemeClass>
-    lateinit var List:ArrayList<ResponseClass.SchemeClass>
-    lateinit var agreeSchemeList:List<ResponseClass.SchemeClass>
+    var userId: String? = null
+    var desable: String? = null
+    var userName: String? = null
+    var image: String? = null
+    lateinit var schemeList: List<ResponseClass.SchemeClass>
+    lateinit var List: ArrayList<ResponseClass.SchemeClass>
+    lateinit var agreeSchemeList: List<ResponseClass.SchemeClass>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
@@ -39,9 +39,10 @@ private lateinit var recyclerView: RecyclerViewAdaptor
         agreeSchemeList = arrayListOf()
         List = arrayListOf()
 
-    val (userName,type,disable) = getPreference(requireContext())
+        val (userName, type, disable) = getPreference(requireContext())
 
-        if (userName != null ){
+
+        if (userName != null) {
             viewModel.getDetails(userName)
         }
 
@@ -63,7 +64,7 @@ private lateinit var recyclerView: RecyclerViewAdaptor
 
         val data = FirebaseAuth.getInstance().currentUser
 
-        Log.e("datassss",data.toString())
+        Log.e("datassss", data.toString())
 
 
 
@@ -81,41 +82,41 @@ private lateinit var recyclerView: RecyclerViewAdaptor
 
     private fun observers() {
 
-        val (user,type) = getPreference(requireContext())
+        val (user, type) = getPreference(requireContext())
 
 
-        viewModel.agreeSchemeResponse.observe(viewLifecycleOwner){
-            if (it.status){
-                    if(type !="Admin") {
-                        agreeSchemeList = it.scheme
-                        progress.isVisible = false
-                        viewModel.getUserScheme(desable.toString())
-                    }else{
-                        setScheme(it.scheme)
-                    }
+        viewModel.agreeSchemeResponse.observe(viewLifecycleOwner) {
+            if (it.status) {
+                if (type != "Admin") {
+                    agreeSchemeList = it.scheme
+                    progress.isVisible = false
+                    viewModel.getUserScheme(desable.toString())
+                } else {
+                    setScheme(it.scheme)
+                }
 
             }
         }
 
-        viewModel.hospitalResponse.observe(viewLifecycleOwner){
+        viewModel.hospitalResponse.observe(viewLifecycleOwner) {
 
             progress.isVisible = false
-            if (it.status){
+            if (it.status) {
                 setHospitalView(it.hospital)
             }
         }
 
-        viewModel.schemeResponse.observe(viewLifecycleOwner){
-            if (it.status){
+        viewModel.schemeResponse.observe(viewLifecycleOwner) {
+            if (it.status) {
                 setScheme(it.scheme)
             }
         }
 
-        viewModel.userResponse.observe(viewLifecycleOwner){
-            if (it.status){
+        viewModel.userResponse.observe(viewLifecycleOwner) {
+            if (it.status) {
                 Glide.with(requireContext()).load(it.person[0].img).into(binding.profileImage)
                 binding.name.text = it.person[0].personName
-                if (it.person[0].type == "User"){
+                if (it.person[0].type == "User") {
                     progress.isVisible = true
                     userId = it.person[0].phone
                     desable = it.person[0].disability
@@ -123,7 +124,7 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                     image = it.person[0].img
                     viewModel.getHospital(it.person[0].disability.toString())
                     viewModel.agreeScheme(it.person[0].phone.toString())
-                }else{
+                } else {
                     viewModel.getHospital()
                     viewModel.getAgreeScheme()
 
@@ -133,19 +134,19 @@ private lateinit var recyclerView: RecyclerViewAdaptor
     }
 
     private fun setScheme(scheme: List<ResponseClass.SchemeClass>) {
-        val(user,type,dis) = getPreference(requireContext())
-        if (scheme.isNotEmpty()){
+        val (user, type, dis) = getPreference(requireContext())
+        if (scheme.isNotEmpty()) {
             List.clear()
             if (type != "Admin") {
-                for (i in scheme){
-                    var flag =0
-                    for (y in agreeSchemeList){
-                        if(i.id == y.id){
-                            flag=1
+                for (i in scheme) {
+                    var flag = 0
+                    for (y in agreeSchemeList) {
+                        if (i.id == y.id) {
+                            flag = 1
                         }
                     }
-                    if (flag==0){
-                      List.add(i)
+                    if (flag == 0) {
+                        List.add(i)
                     }
                 }
                 binding.recyclerViewScheme.apply {
@@ -157,7 +158,7 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                 }
                 itemClickListener(recyclerViewAdaptor)
 
-            }else{
+            } else {
                 binding.recyclerViewScheme.apply {
                     layoutManager = LinearLayoutManager(requireContext())
                     recyclerViewAdaptor.item = scheme
@@ -168,15 +169,15 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                 itemClickListener(recyclerViewAdaptor)
 
             }
-        } else{
-        binding.empty.isVisible = true
-        binding.recyclerViewScheme.isVisible = false
-    }
+        } else {
+            binding.empty.isVisible = true
+            binding.recyclerViewScheme.isVisible = false
+        }
     }
 
     private fun setHospitalView(hospital: List<ResponseClass.Hospital>) {
 
-        if (hospital.isNotEmpty()){
+        if (hospital.isNotEmpty()) {
             binding.emptyHost.isVisible = false
             binding.recyclerViewHospital.isVisible = true
             binding.btnShowHospital.isVisible = true
@@ -186,7 +187,7 @@ private lateinit var recyclerView: RecyclerViewAdaptor
                 adapter = recyclerView
                 setHasFixedSize(true)
             }
-        }else{
+        } else {
             binding.emptyHost.isVisible = true
             binding.recyclerViewHospital.isVisible = false
             binding.btnShowHospital.isVisible = false
@@ -197,59 +198,74 @@ private lateinit var recyclerView: RecyclerViewAdaptor
     private fun itemClickListener(recycleViewAdaptor: RecyclerViewAdaptor) {
         recycleViewAdaptor.itemClickListener = { view, item, position ->
 
-            val (user,type,disability) =  getPreference(requireContext())
+            val (user, type, disability) = getPreference(requireContext())
             when (item) {
                 is ResponseClass.SchemeClass -> {
 
-                    when(view.id){
-                        R.id.button2 ->{
+                    when (view.id) {
+                        R.id.button2 -> {
                             progress.isVisible = true
                             item.status = "apply"
-                            item.uImg =image
-                            item.Name =userName
-                            agreeSchemeRef.child(user!!).child(item.id!!).setValue(item).addOnCompleteListener {
-                                if (it.isSuccessful) {
+                            item.uImg = image
+                            item.Name = userName
+                            agreeSchemeRef.child(user!!).child(item.id!!).setValue(item)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
 
-                                    progress.isVisible = false
-                                    Toast.makeText(
-                                        context,
-                                        "Successfully Applied",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                        progress.isVisible = false
+                                        Toast.makeText(
+                                            context,
+                                            "Successfully Applied",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
+                                    }
                                 }
-                            }
                         }
 
-                        R.id.view ->{
-                            Toast.makeText(requireContext(), "callll", Toast.LENGTH_SHORT).show()
+                        R.id.view -> {
                             val bundle = bundleOf()
-                            bundle.putString("child",item.userId)
-                            bundle.putBoolean("page",true)
-                            findNavController().navigate(R.id.action_homeFragment_to_viewPersonDetailsFragment,bundle)
+                            bundle.putString("child", item.userId)
+                            bundle.putBoolean("page", true)
+                            findNavController().navigate(
+                                R.id.action_homeFragment_to_viewPersonDetailsFragment,
+                                bundle
+                            )
                         }
 
-                        R.id.schemes ->{
-
+                        R.id.schemes -> {
+                            val bundle = bundleOf()
+                            bundle.putString("sname", item.schemeName)
+                            bundle.putString("Img", item.schemeImg)
+                            bundle.putString("sDis", item.disability)
+                            bundle.putString("samount", item.amount)
+                            bundle.putString("description", item.description)
+                            bundle.putString("panchayath", item.panchayath)
+                            findNavController().navigate(
+                                R.id.action_homeFragment_to_dialogFragment,
+                                bundle
+                            )
                         }
 
-                        R.id.btnApprove ->{
+                        R.id.btnApprove -> {
                             progress.isVisible = true
                             item.status = "approve"
-                            item.uImg =item.uImg
-                            item.Name =item.Name
-                            agreeSchemeRef.child(item.userId!!).child(item.id!!).setValue(item).addOnCompleteListener {
-                                if (it.isSuccessful) {
+                            item.uImg = item.uImg
+                            item.Name = item.Name
+                            agreeSchemeRef.child(item.userId!!).child(item.id!!).setValue(item)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
 
-                                    progress.isVisible = false
-                                    Toast.makeText(
-                                        context,
-                                        "Approved",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                        progress.isVisible = false
+                                        Toast.makeText(
+                                            context,
+                                            "Approved",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
+                                    }
                                 }
-                            }                        }
+                        }
                     }
 
 

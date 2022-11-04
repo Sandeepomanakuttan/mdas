@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_viewPersonDetailsFragment"
             app:destination="@id/viewPersonDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/trainingFragment"
@@ -63,4 +66,9 @@
         android:name="com.mainproject.mdas.view.admin.person.viewPersonDetailsFragment"
         android:label="fragment_view_person_details"
         tools:layout="@layout/fragment_view_person_details" />
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.mainproject.mdas.model.base.dialog.DialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" />
 </navigation>

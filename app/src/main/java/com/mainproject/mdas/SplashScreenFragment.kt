@@ -6,12 +6,11 @@ import android.os.Looper
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.mainproject.mdas.databinding.FragmentSplashScreenBinding
 import com.mainproject.mdas.model.base.BaseFragments
-import com.mainproject.mdas.utils.getPreference
-import com.mainproject.mdas.utils.preference
-import com.mainproject.mdas.utils.startAnimations
+import com.mainproject.mdas.utils.*
 
 class SplashScreenFragment :
     BaseFragments<FragmentSplashScreenBinding>(FragmentSplashScreenBinding::inflate) {
@@ -19,8 +18,9 @@ class SplashScreenFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.circle_scale).apply {
-            duration = 1000
+            duration = 700
             interpolator = AccelerateDecelerateInterpolator()
+
         }
 
 
@@ -30,13 +30,16 @@ class SplashScreenFragment :
                 animationView.visibility = View.INVISIBLE
 
                 animationView.startAnimations(animation) {
-                    preference(requireContext(),"7907492539","Admin")
 
 
                     val (user,type) = getPreference(requireContext())
 
                     if (user == null) {
+                        if (!getOnPreference(requireContext()))
                         findNavController().navigate(R.id.action_splashScreenFragment_to_onbordingFragment)
+                        else
+                            findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+
                     }
                     else {
                         findNavController().navigate(R.id.action_splashScreenFragment_to_adminBaseFragment)

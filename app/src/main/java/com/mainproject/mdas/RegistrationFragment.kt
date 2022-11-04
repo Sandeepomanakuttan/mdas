@@ -23,7 +23,6 @@ import com.mainproject.mdas.databinding.FragmentRegistrationBinding
 import com.mainproject.mdas.model.base.BaseFragments
 import com.mainproject.mdas.model.response.ResponseClass
 import com.mainproject.mdas.model.viewmodel.AuthViewModel
-import com.mainproject.mdas.model.viewmodel.admin.AdminViewModel
 import com.mainproject.mdas.utils.disableArrays
 import com.mainproject.mdas.utils.panchayatArray
 
@@ -91,7 +90,6 @@ class RegistrationFragment :
 
         binding.disability.adapter = spinner1
 
-        binding.panchayath.adapter = spinner
 
 
 
@@ -99,8 +97,8 @@ class RegistrationFragment :
             val personName = binding.name.text.trim().toString()
             val houseName = binding.houseName.text.trim().toString()
             val phone = binding.phone.text.trim().toString()
-            val district = binding.district.selectedItem
-            val panchayath = binding.panchayath.selectedItem
+            val district = binding.district.text
+            val panchayath = binding.panchayath.text
             val guardian = binding.guardian.text.trim().toString()
             val disability = binding.disability.selectedItem
             val percentage = binding.percentage.text.trim().toString()
@@ -124,40 +122,28 @@ class RegistrationFragment :
                 uid == "" -> showToast("Enter UID Number")
                 imgDisabilityAdhaar == null -> showToast("Add Your  Image")
                 else -> {
+                    personClass = ResponseClass.Person(
+                        personName = personName,
+                        houseName = houseName,
+                        district = district.toString(),
+                        panchayath = panchayath.toString(),
+                        img = imgProfile.toString(),
+                        disability = disability.toString(),
+                        guardian = guardian,
+                        imgGuardianAdhar = imgGuardianAdhaar.toString(),
+                        percentage = percentage,
+                        imgDisability = imgDisability.toString(),
+                        adhar = uid,
+                        imgAdhar = imgDisabilityAdhaar.toString(),
+                        status = "apply",
+                        phone = phone,
+                        type = "User"
+                    )
 
-                    viewModel.sendVerificationCode(phone)
                     progress.isVisible = true
+                    viewModel.userCheck(personClass)
 
-                    viewModel.otps?.observe(viewLifecycleOwner) {
-                        progress.isVisible = false
-                        binding.scrollable.isVisible = false
-                        binding.otpLayoutMain.isVisible = true
-                        personClass = ResponseClass.Person(
-                            personName = personName,
-                            houseName = houseName,
-                            district = district.toString(),
-                            panchayath = panchayath.toString(),
-                            img = imgProfile.toString(),
-                            disability = disability.toString(),
-                            guardian = guardian,
-                            imgGuardianAdhar = imgGuardianAdhaar.toString(),
-                            percentage = percentage,
-                            imgDisability = imgDisability.toString(),
-                            adhar = uid,
-                            imgAdhar = imgDisabilityAdhaar.toString(),
-                            status = "apply",
-                            phone = phone,
-                            type = "User"
-                        )
-                        binding.txt.text =
-                            String.format(phone, R.string.code_has_been_send_to_91_84_61)
-                        countDownTimer = MyCountDownTimer(startTime, interval)
-                        binding.resend.isVisible = true
-                        verificationId = it.toString()
-                        setupOtpInput()
-                        timerControl()
 
-                    }
                 }
             }
 
@@ -171,24 +157,48 @@ class RegistrationFragment :
 
     private fun observers() {
 
+        viewModel.otps!!.observe(viewLifecycleOwner) {
+            progress.isVisible = false
+            binding.otpLayoutMain.isVisible = true
+            binding.scrollable.isVisible = false
+            binding.txt.text =
+                String.format(binding.phone.text.toString(), R.string.code_has_been_send_to_91_84_61)
+            countDownTimer = MyCountDownTimer(startTime, interval)
+            binding.resend.isVisible = true
+            verificationId = it.toString()
+            setupOtpInput()
+            timerControl()
+
+        }
+
+        AuthViewModel.userList.observe(viewLifecycleOwner){
+            progress.isVisible = false
+            if (it!!.status){
+                viewModel.s = requireActivity()
+                viewModel.sendVerificationCode(binding.phone.text.toString())
+                progress.isVisible = true
+
+            }else{
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         AuthViewModel.PersonAddResponse.observe(viewLifecycleOwner) {
             progress.isVisible = false
-
             if (it.status) {
-                if (it.message != "Person Already Exist") {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                    findNavController().popBackStack()
                 }
-            } else {
+             else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
 
     }
 
-    fun showToast(msg: String) {
+
+    private fun showToast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
@@ -200,15 +210,12 @@ class RegistrationFragment :
         binding.code4.addTextChangedListener(GenericTextWatcher(binding.code4, binding.code5))
         binding.code5.addTextChangedListener(GenericTextWatcher(binding.code5, binding.code6))
         binding.code6.addTextChangedListener(GenericTextWatcher(binding.code6, null))
-
-
         binding.code1.setOnKeyListener(GenericKeyEvent(binding.code1, null))
         binding.code2.setOnKeyListener(GenericKeyEvent(binding.code2, binding.code1))
         binding.code3.setOnKeyListener(GenericKeyEvent(binding.code3, binding.code2))
         binding.code4.setOnKeyListener(GenericKeyEvent(binding.code4, binding.code3))
         binding.code5.setOnKeyListener(GenericKeyEvent(binding.code5, binding.code4))
         binding.code6.setOnKeyListener(GenericKeyEvent(binding.code6, binding.code5))
-
     }
 
     private fun timerControl() {
@@ -327,6 +334,7 @@ class RegistrationFragment :
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             val id = FirebaseAuth.getInstance().currentUser.toString()
+                            progress.isVisible = false
                             viewModel.addUser(personClass)
 
                         } else {
@@ -334,13 +342,16 @@ class RegistrationFragment :
 
                             Toast.makeText(
                                 requireContext(),
-                                it.exception.toString(),
+                                "invalid Otp",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
             }
 
+        }
+        binding.resend.setOnClickListener {
+            viewModel.sendVerificationCode(binding.phone.text.toString())
         }
 
     }
